@@ -26,3 +26,4 @@ fill_factories(BagIn,BagOut,NFact,FactoriesAux,FactoriesOut):-
     append(FactoriesAux,[FactAux],FactoriesAux2),
     NFactAux is NFact - 1,
     fill_factories(BagAux,BagOut,NFactAux,FactoriesAux2,FactoriesOut).
+    
