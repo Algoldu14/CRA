@@ -56,7 +56,14 @@ simbolos([a,b,c,b,a]).
 
 listas_simbolos([[a,a,b,b],[c,c,d,c],[a,b,c,d]]).
 
-reemplazar_simbolo_sublista(Lista,Nsubllista,ValorOri,ValorNue,ListaOut):-
+reemplazar_simbolo_sublista(Lista,Nsubllista,Isublista,ValorNue,ListaOut):-
            nth1(Nsublista,Lista,Sublista,Res),
-           select(ValorOri, Sublista, ValorNue, SubListaOut),
+           
+           nth1(Isublista,Sublista,_,ResSublista),
+           nth1(Isublista,SublistaOut,ValorNue,ResSublista),
+           
+           %select(ValorOri, Sublista, ValorNue, SubListaOut),
            nth1(Nsublista, ListaOut, SubListaOut, Res).
+           
+           
+           
