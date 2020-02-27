@@ -2,7 +2,7 @@
 
 random_bag(BagS):-bag(Bag),random_permutation(Bag,BagS).
 
-consult(./data.pl).
+:-consult('./data.pl').
 
 fill_factory(BagIn,BagOut,FactoryIn,FactoryOut):-%Regla que nos permite llenar las casillas de una factoria con las fichas de la bolsa permitada aleatoriamente
     BagIn=[Ficha|BagAux],
