@@ -1,18 +1,8 @@
-
-bag(['N','N','N','N','N','N','N','N','N','N','A','A','A','A','A','A','A','A','A','A','B','B','B','B','B','B','B','B','B','B','R','R','R','R','R','R','R','R','R','R','V','V','V','V','V','V','V','V','V','V']).
+% Autor: Álvaro Golbano y Laura Ramos
 
 random_bag(BagS):-bag(Bag),random_permutation(Bag,BagS).
 
-fac1(['_','_','_','_']).
-fac2(['_','_','_','_']).
-fac3(['_','_','_','_']).
-fac4(['_','_','_','_']).
-fac5(['_','_','_','_']).
-fac7(['_','_','_','_']).
-fac8(['_','_','_','_']).
-fac9(['_','_','_','_']).
-
-factories([f1,f2,f3,f4,f5,f6,f7,f8,f9]).
+consult(./data.pl).
 
 fill_factory(BagIn,BagOut,FactoryIn,FactoryOut):-%Regla que nos permite llenar las casillas de una factoria con las fichas de la bolsa permitada aleatoriamente
     BagIn=[Ficha|BagAux],
@@ -29,3 +19,5 @@ fill_factories(BagIn,BagOut,NFact,FactoriesAux,FactoriesOut):-
     NFactAux is NFact - 1,
     fill_factories(BagAux,BagOut,NFactAux,FactoriesAux2,FactoriesOut).
     
+    
+
