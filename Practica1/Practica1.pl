@@ -4,6 +4,31 @@ random_bag(BagS):-bag(Bag),random_permutation(Bag,BagS).
 
 :-consult('./data.pl').
 
+play:-
+    write('Hello my friend, let`s play a game.'), nl,
+    write('********* Welcome to Azul game ********'), nl,
+    write(' '), nl,
+    write('Enter "exit" to exit the game.'), nl,
+    write('If you do not want to exit the game, please enter "start"'), nl,
+    read(X),
+    check_start(X),
+    X == exit,
+    % Prevents backtracking so that it won't backtrack beyond the cut
+    !, nl, nl,
+    write('Come back any time you like!'), nl.
+
+
+check_start(exit):-!.
+check_start(start):-    write('Number of player: '), nl,
+                        read(NPlayer),
+                        %initFactory(NPlayer,_),
+                        %start(),
+                        !.
+create_players(Nplayer,PlayersAux,PlayersOut):- % Genera los jugadores necesarios para la partida
+       write('Name of the player: '),nl, read(NamePlayer),
+       
+
+
 fill_factory(BagIn,BagOut,FactoryIn,FactoryOut):-%Regla que nos permite llenar las casillas de una factoria con las fichas de la bolsa permitada aleatoriamente
     BagIn=[Ficha|BagAux],
     select('_',FactoryIn,Ficha,FactoryAux),
@@ -12,7 +37,7 @@ fill_factory(BagOut,BagOut,FactoryOut,FactoryOut).
 
 
 fill_factories(BagOut,BagOut,0,FactoriesOut,FactoriesOut).%hace lo que la anterior pero con N factorias
-%              BagS, bagOut,Numero,[],         factoriesOut
+%              BagS, bagOut,Numero,[]         ,factoriesOut
 fill_factories(BagIn,BagOut,NFact,FactoriesAux,FactoriesOut):-
     f1(Fact),fill_factory(BagIn,BagAux,Fact,FactAux),
     append(FactoriesAux,[FactAux],FactoriesAux2),

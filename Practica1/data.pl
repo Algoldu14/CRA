@@ -17,18 +17,13 @@ factories([f1,f2,f3,f4,f5,f6,f7,f8,f9]).
 player(['_','_',board]).
 
 board([patterns,the_wall,the_floor]).
-patterns([patt1,paat2,patt3,paat4,patt5]).
+patterns(Patterns):-patt1(Pat1),patt2(Pat2),patt3(Pat3),patt4(Pat4),patt5(Pat5),Patterns =[Pat1,Pat2,Pat3,Pat4,Pat5].
 patt1(['_']).
 patt2(['_','_']).
 patt3(['_','_','_']).
 patt4(['_','_','_','_']).
 patt5(['_','_','_','_','_']).
 
-the_wall([wall1,wall2,wall3,wall4,wall5]).
-wall1(['_','_','_','_','_']).
-wall2(['_','_','_','_','_']).
-wall3(['_','_','_','_','_']).
-wall4(['_','_','_','_','_']).
-wall5(['_','_','_','_','_']).
+the_wall(['_','_','_','_','_'].['_','_','_','_','_'].['_','_','_','_','_'].['_','_','_','_','_'].['_','_','_','_','_']).
 
 the_floor(['_','_','_','_','_','_','_']).
