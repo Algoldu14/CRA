@@ -24,11 +24,15 @@ check_start(start):-    write('Number of player: '), nl,
                         %initFactory(NPlayer,_),
                         %start(),
                         !.
+%-----------------------------------Ini Game-------------------------------------------------%
 create_players(Nplayer,PlayersAux,PlayersOut):- % Genera los jugadores necesarios para la partida
        write('Name of the player: '),nl, read(NamePlayer),
+       ini_player(NamePlayer,0,JugadorOut),
+       append(PlayersAux,[JugadorOut],PlayersAux2),
+       NPlayersOut is Nplayer - 1,
+       create_players(NPlayersOut,PlayersAux2,PlayersOut).
+create_players(0,PlayersOut,PlayersOut).
        
-
-
 fill_factory(BagIn,BagOut,FactoryIn,FactoryOut):-%Regla que nos permite llenar las casillas de una factoria con las fichas de la bolsa permitada aleatoriamente
     BagIn=[Ficha|BagAux],
     select('_',FactoryIn,Ficha,FactoryAux),
@@ -43,6 +47,8 @@ fill_factories(BagIn,BagOut,NFact,FactoriesAux,FactoriesOut):-
     append(FactoriesAux,[FactAux],FactoriesAux2),
     NFactAux is NFact - 1,
     fill_factories(BagAux,BagOut,NFactAux,FactoriesAux2,FactoriesOut).
+
+%----------------------------------Start Game-------------------------------------------------%
     
-    
+start_playing(ListPlayers, ListFactories, ListPlayersOut , ListFactoriesOut, CenterBoard, Bag):-
 
