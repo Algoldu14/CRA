@@ -1,4 +1,4 @@
-% Autor: Álvaro Golbano y Laura Ramos
+% Autor: ï¿½lvaro Golbano y Laura Ramos
 
 random_bag(BagS):-bag(Bag),random_permutation(Bag,BagS).
 
@@ -50,5 +50,23 @@ fill_factories(BagIn,BagOut,NFact,FactoriesAux,FactoriesOut):-
 
 %----------------------------------Start Game-------------------------------------------------%
     
+print_board_player(BoardP):-
+	
+    
+start_playing(ListPlayers, [],ListPlayersOut, [],[], Bag). %Y despues a alicatar
 start_playing(ListPlayers, ListFactories, ListPlayersOut , ListFactoriesOut, CenterBoard, Bag):-
+	%imprimir centro y fatorias
+	%imprimir tablero del jugador activo
+	%pedir color y factoria
+	%quitar los azulejos del color apropiado de la factoria, tirando todo lo demÃ¡s al centro
+	%preguntar la linea de patron donde meter los azulejos	
+	%Modificar el tablero del jugador activo 
+	%repetir lo anterior con el siguiente jugador 
+
+
+
+
+
+
+
 
