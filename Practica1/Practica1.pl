@@ -1,4 +1,4 @@
-% Autor: �lvaro Golbano y Laura Ramos
+﻿% Autor: �lvaro Golbano y Laura Ramos
 
 random_bag(BagS):-bag(Bag),random_permutation(Bag,BagS).
 
@@ -54,13 +54,13 @@ fill_factories(BagIn,BagOut,NFact,FactoriesAux,FactoriesOut):-
     
 start_playing(ListPlayers, [],ListPlayersOut, [],[], Bag). %Y despues a alicatar
 start_playing(ListPlayers, ListFactories, ListPlayersOut , ListFactoriesOut, CenterBoard, Bag):-
-	%imprimir centro y fatorias
-	%imprimir tablero del jugador activo
-	%pedir color y factoria
-	%quitar los azulejos del color apropiado de la factoria, tirando todo lo demás al centro
-	%preguntar la linea de patron donde meter los azulejos	
-	%Modificar el tablero del jugador activo 
-	%repetir lo anterior con el siguiente jugador 
+        %imprimir centro y fatorias
+        %imprimir tablero del jugador activo
+        %pedir color y factoria
+        %quitar los azulejos del color apropiado de la factoria, tirando todo lo demás al centro
+        %preguntar la linea de patron donde meter los azulejos  
+        %Modificar el tablero del jugador activo 
+        %repetir lo anterior con el siguiente jugador 
 
 % Print elements
 printMatrix([]).
@@ -83,21 +83,23 @@ getColorPos(Factory, Color, Result, ListAux, CenterBoard, CenterBoardOut):-
     % Lista con las posiciones en las que se encuentra el color
     findall(N, nth1(N,Factory,Color), Result),
     % Tamaño de la lista con las posiciones del color
-    N is length(Result,Size),
+    N is (length(Result,Size)),
     %Añadimos las fichas del color en una lista auxiliar que son las fichas que tiene el jugador
-    length(ListAux,N), maplist(=(Color),ListAux),
+    length(ListAux,(length(Result,Size)), maplist(=(Color),ListAux),
     % Quitamos de la factoria las fichas del color
     pickUpColor(N, Factory, FactoryOut),
     %Añadimos las fichas restantes de la factoria al centro de la mesa
-    append(Factory, CenterBoard, CenterBoardOut).
+    append(Factory,CenterBoard,CenterBoardOut).
 
-pickUpColor(_, [],[]).
+pickUpColor(_,[],[]).
 pickUpColor(Color, [Color|Factory], FactoryOut):-
     pickUpColor(Color, Factory, FactoryOut).
 pickUpColor(Color, [T|Factory], [T|FactoryOut]):-
     dif(Color, T),
     pickUpColor(Color, Factory, FactoryOut).
 
+% Test case
+pickUpColor('R',['R','A','R','R'], Result).
 
 
 
