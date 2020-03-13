@@ -50,8 +50,14 @@ fill_factories(BagIn,BagOut,NFact,FactoriesAux,FactoriesOut):-
 
 %----------------------------------Start Game-------------------------------------------------%
     
-print_board_player(BoardP):-
-	
+% Print elements
+printMatrix([]).
+printMatrix([ H | T] ) :- printMatrixRow(H), printMatrix(T).
+printMatrix([ H | [] ]) :- printMatrixRow(H).
+
+printMatrixRow([]).
+printMatrixRow([ H | T ]) :- write(H), printMatrixRow(T).
+printMatrixRow([ H | [] ]) :- write(H).
     
 start_playing(ListPlayers, [],ListPlayersOut, [],[], Bag). %Y despues a alicatar
 start_playing(ListPlayers, ListFactories, ListPlayersOut , ListFactoriesOut, CenterBoard, Bag):-
