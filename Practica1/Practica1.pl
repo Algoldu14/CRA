@@ -104,5 +104,26 @@ pickUpColor('R',['R','A','R','R'], Result).
 
 
 
+/*
 
+    sort(list, [_]). -> sabemos si es vacía o no
+                        si está vacia, pasamos a meter las fichas
+                        
+                        si no está vacia, hacemos el member
+    member(R, List) -> si o no
+    El member el problema que tiene es que no diferencia entre '_' '_' '_' '_' y '_' '_' '_' 'R'
+    
+    
+    
+   ( condition -> then_clause ; else_clause )
+   
+   (
+     sort(list, ['_']) -> meterlo;
+    (
+     member(nth0(1,ListIn,Color),PatternLine) -> meterlo ; writeln("No puedes meter las fichas de ese color en este patrón")
+		)
+)
 
+ Meterlo -> coger el primer elemento ListIn y sustituir la primera '_' del PatternLine, borras la primera posicion de ListIn y repites hasta recorrer toda la PatterLine
+
+*/
