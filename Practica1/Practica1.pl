@@ -83,9 +83,9 @@ getColorPos(Factory, Color, Result, ListAux, CenterBoard, CenterBoardOut):-
     % Lista con las posiciones en las que se encuentra el color
     findall(N, nth1(N,Factory,Color), Result),
     % Tamaño de la lista con las posiciones del color
-    N is (length(Result,Size)),
+    %N is (length(Result,Size)),
     %Añadimos las fichas del color en una lista auxiliar que son las fichas que tiene el jugador
-    length(ListAux,(length(Result,Size)), maplist(=(Color),ListAux),
+    length(ListAux, length(Result,Size)), maplist(=(Color),ListAux),
     % Quitamos de la factoria las fichas del color
     pickUpColor(N, Factory, FactoryOut),
     %Añadimos las fichas restantes de la factoria al centro de la mesa
