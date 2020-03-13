@@ -50,14 +50,7 @@ fill_factories(BagIn,BagOut,NFact,FactoriesAux,FactoriesOut):-
 
 %----------------------------------Start Game-------------------------------------------------%
     
-% Print elements
-printMatrix([]).
-printMatrix([ H | T] ) :- printMatrixRow(H), printMatrix(T).
-printMatrix([ H | [] ]) :- printMatrixRow(H).
 
-printMatrixRow([]).
-printMatrixRow([ H | T ]) :- write(H), printMatrixRow(T).
-printMatrixRow([ H | [] ]) :- write(H).
     
 start_playing(ListPlayers, [],ListPlayersOut, [],[], Bag). %Y despues a alicatar
 start_playing(ListPlayers, ListFactories, ListPlayersOut , ListFactoriesOut, CenterBoard, Bag):-
@@ -69,8 +62,41 @@ start_playing(ListPlayers, ListFactories, ListPlayersOut , ListFactoriesOut, Cen
 	%Modificar el tablero del jugador activo 
 	%repetir lo anterior con el siguiente jugador 
 
+% Print elements
+printMatrix([]).
+printMatrix([ H | T] ) :- printMatrixRow(H), printMatrix(T).
+printMatrix([ H | [] ]) :- printMatrixRow(H).
+
+printMatrixRow([]).
+printMatrixRow([ H | T ]) :- write(H), printMatrixRow(T).
+printMatrixRow([ H | [] ]) :- write(H).
+  
+indices(List, E, Is) :-
+findall(N, nth1(N, List, E), Is).
+    
+
+% Tras elegir un color, se quita de las factorias, el jugador se lo guarda y se mueve las fichas al centro
+% inputs: Factory, Color, Result Lista con las posiciones dentro de la factoria donde esta el color (viene de indices)
+% Output: ListAux, que es la lista que tiene el jugador con las fichas
+
+getColorPos(Factory, Color, Result, ListAux, CenterBoard, CenterBoardOut):-
+    % Lista con las posiciones en las que se encuentra el color
+    findall(N, nth1(N,Factory,Color), Result),
+    % Tamaño de la lista con las posiciones del color
+    N is length(Result,Size),
+    %Añadimos las fichas del color en una lista auxiliar que son las fichas que tiene el jugador
+    length(ListAux,N), maplist(=(Color),ListAux),
+    % Quitamos de la factoria las fichas del color
+    pickUpColor(N, Factory, FactoryOut),
+    %Añadimos las fichas restantes de la factoria al centro de la mesa
+    append(Factory, CenterBoard, CenterBoardOut).
 
 
+% Quitar un color de la factoria
+pickUpColor(N, Factory, BoardPlayer, FactoryOut, BoardPlayerOut):-
+    %Quitar de la factoria el elemento de la posicion N
+    nth0(N,Factory,FactoryOut, '_').
+    
 
 
 
