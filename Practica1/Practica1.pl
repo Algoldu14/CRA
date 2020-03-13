@@ -91,12 +91,14 @@ getColorPos(Factory, Color, Result, ListAux, CenterBoard, CenterBoardOut):-
     %Añadimos las fichas restantes de la factoria al centro de la mesa
     append(Factory, CenterBoard, CenterBoardOut).
 
+pickUpColor(_, [],[]).
+pickUpColor(Color, [Color|Factory], FactoryOut):-
+    pickUpColor(Color, Factory, FactoryOut).
+pickUpColor(Color, [T|Factory], [T|FactoryOut]):-
+    dif(Color, T),
+    pickUpColor(Color, Factory, FactoryOut).
 
-% Quitar un color de la factoria
-pickUpColor(N, Factory, BoardPlayer, FactoryOut, BoardPlayerOut):-
-    %Quitar de la factoria el elemento de la posicion N
-    nth0(N,Factory,FactoryOut, '_').
-    
+
 
 
 
