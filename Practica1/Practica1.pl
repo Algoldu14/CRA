@@ -71,32 +71,35 @@ printMatrixRow([]).
 printMatrixRow([ H | T ]) :- write(H), printMatrixRow(T).
 printMatrixRow([ H | [] ]) :- write(H).
   
-indices(List, E, Is) :-
-findall(N, nth1(N, List, E), Is).
+indices(List, E, Is) :- findall(N, nth1(N, List, E), Is).
+
     
 
 % Tras elegir un color, se quita de las factorias, el jugador se lo guarda y se mueve las fichas al centro
 % inputs: Factory, Color, Result Lista con las posiciones dentro de la factoria donde esta el color (viene de indices)
 % Output: ListAux, que es la lista que tiene el jugador con las fichas
 
-getColorPos(Factory, Color, Result, ListAux, CenterBoard, CenterBoardOut):-
+getColorPos(Factory,Color,Result,ListAux,CenterBoard,CenterBoardOut):-
     % Lista con las posiciones en las que se encuentra el color
-    findall(N, nth1(N,Factory,Color), Result),
+    indices(Factory, Color, Result),
     % Tamaño de la lista con las posiciones del color
-    %N is (length(Result,Size)),
+    length(Result,Size),
     %Añadimos las fichas del color en una lista auxiliar que son las fichas que tiene el jugador
-    length(ListAux, length(Result,Size)), maplist(=(Color),ListAux),
+    length(ListAux, Size),maplist(=(Color),ListAux),
     % Quitamos de la factoria las fichas del color
-    pickUpColor(N, Factory, FactoryOut),
+    pickUpColor(Color,Factory,FactoryOut),
     %Añadimos las fichas restantes de la factoria al centro de la mesa
-    append(Factory,CenterBoard,CenterBoardOut).
+    append(FactoryOut,CenterBoard,CenterBoardOut).
 
-pickUpColor(_,[],[]).
+
+% Quitar un color de la factoria    
+pickUpColor(_, [],[]).
 pickUpColor(Color, [Color|Factory], FactoryOut):-
     pickUpColor(Color, Factory, FactoryOut).
 pickUpColor(Color, [T|Factory], [T|FactoryOut]):-
     dif(Color, T),
     pickUpColor(Color, Factory, FactoryOut).
+
 
 % Test case
 %pickUpColor('R',['R','A','R','R'], Result).
@@ -158,3 +161,40 @@ prueba([Color|List], PatternLine,PatterLineOut):-
  Meterlo -> coger el primer elemento ListIn y sustituir la primera '_' del PatternLine, borras la primera posicion de ListIn y repites hasta recorrer toda la PatterLine
 
 */
+
+movePlayer(ListFactories, CenterBoard, Player, PlayerOut, ListFactoriesOut, CenterBoardOut):- 
+    write('Select a factory: '), read(NumFactory),
+   nth0(NumFactory, ListFactories, FactoryOut),
+   % write('Select a color; '), read(Color),
+    %write(Color),
+   getColorPos(FactoryOut, 'V' , Result, ListAux, CenterBoard, CenterBoardOut),
+    write('Pattern Line: '), read(NumPatternLine),
+    getPatternPlay(Player,ListPattern),
+    nth0(NumPatternLine, ListPattern, PatternLine),
+    enter(ListAux, PatternLine, FloorLine, PatternLineOut, FloorLineOut).
+
+%Test case:
+% Lista de factorias = [['R', 'V', 'N', 'N'], ['R','R', 'N','N'], ['A','V', 'V', 'R']]
+% PLAYER: ['Laura', '0', [ [['a','v','r','n','b'],['b','a','v','r','n'],['n','b','a','v','r'],['r','n','b','a','v'],['v','r','n','b','a']], [['_'], ['_','_'],['_','_','_'],['_','_','_','_'],['_','_','_','_','_']], ['_','_','_','_','_','_','_'] ],
+
+movePlayerA(ListFactories, CenterBoard, Player, PlayerOut, ListFactoriesOut, CenterBoardOut):- 
+   write('Select a factory: '), read(NumFactory),
+   nth0(NumFactory, ListFactories, FactoryOut),
+   write('Select a color; '), read(Color),
+   write(Color),
+   getColorPos(FactoryOut,Color, Result, ListAux, CenterBoard, CenterBoardOut).
+
+% getColorPos( ['A','V', 'V', 'R'], 'V', Result, ListAux, [], CenterBoardOut).
+/*
+ * 
+
+movePlayerA([['R', 'V', 'N', 'N'], ['R','R', 'N','N'], ['A','V', 'V', 'R']],
+             [], 
+             ['Laura', '0',
+                [ [['a','v','r','n','b'],['b','a','v','r','n'],['n','b','a','v','r'],['r','n','b','a','v'],['v','r','n','b','a']], 
+                   [['_'], ['_','_'],['_','_','_'],['_','_','_','_'],['_','_','_','_','_']], 
+                   ['_','_','_','_','_','_','_'] 
+                ]
+             ],
+             PlayerOut, ListFactoriesOut, CenterBoardOut).
+ */
