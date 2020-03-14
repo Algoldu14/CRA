@@ -99,8 +99,25 @@ pickUpColor(Color, [T|Factory], [T|FactoryOut]):-
     pickUpColor(Color, Factory, FactoryOut).
 
 % Test case
-pickUpColor('R',['R','A','R','R'], Result).
+%pickUpColor('R',['R','A','R','R'], Result).
 
+   
+%NumLine = 2;
+%ListIn = ['R','R']
+%PatternList = [['_'],['_','_'],['_','_','_'],['_','_','_','_'],['_','_','_','_','_']]
+%Floor = ['_','_','_','_','_','_','_']
+%INTRODUCE LAS FICHAS EN LA LINEA DE PATRON SIN TENER EN CUENTA LAS FICHAS QUE SE CAERÍAN AL SUELO.
+enterL([],_,_).
+enterL(_,PatterLineOut,PatterLineOut).
+enterL([Color|List], PatterLine,PatterLineOut):-
+    (member('_', PatterLine) ->
+        select('_',PatterLine,[Color],PatterLineAux), 	enterL([List],PatterLineAux,PatterLineOut);
+     enterL([List], PatternLine,PatternLineOut)
+    ).
+
+prueba([Color|List], PatternLine,PatterLineOut):-
+    member('_', PatternLine) -> select('_',PatternLine,[Color],PatterLineOut) ; writeln("**").
+    
 
 
 
