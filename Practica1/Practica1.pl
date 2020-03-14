@@ -1,4 +1,4 @@
-﻿% Autor: �lvaro Golbano y Laura Ramos
+﻿% Autor: Álvaro Golbano, Dave y las Lauras <3
 
 random_bag(BagS):-bag(Bag),random_permutation(Bag,BagS).
 
@@ -101,6 +101,20 @@ pickUpColor(Color, [T|Factory], [T|FactoryOut]):-
 % Test case
 %pickUpColor('R',['R','A','R','R'], Result).
 
+
+% INTRODUCE LAS FICHAS EN UNA LINEA DE PATRON, SI CABEN, SINO SE CAEN AL SUELO
+% Y SI EL SUELO ESTÁ LLENO, LAS FICHAS DESAPARECEN
+enter(_, PatternLineOut, FloorLineOut, PatternLineOut, FloorLineOut).    
+enter([],_, _, _,_).
+enter([Color|List], PatternLine, FloorLine, PatternLineOut, FloorLineOut):-
+    %Miramos si podemos introducir las fichas en la linea de patron
+    (member('_',PatternLine) ->
+        select('_', PatternLine, Color, PatternLineAux), enter(List, PatternLineAux, FloorLine, PatternLineOut, FloorLineOut);
+        %Si no podemos, entonces introduciriamos las fichas en la linea de suelo
+        (member('_',FloorLine) ->
+            select('_',FloorLine,Color,FloorLineAux), enter(List, PatternLine, FloorLineAux, PatternLineOut, FloorLineOut);
+        	enter(List, PatternLine,FloorLine,PatternLine,FloorLine) 
+    )).
    
 %NumLine = 2;
 %ListIn = ['R','R']
