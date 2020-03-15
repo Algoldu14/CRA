@@ -1,45 +1,5 @@
 % Autor: Álvaro Golbano, Dave y las Lauras <3
 
-/* -------------------------------------------  *
- * 			 		D A T A						*
- * -------------------------------------------  */
-
-random_bag(BagS):-bag(Bag),random_permutation(Bag,BagS).
-
-bag(['N','N','N','N','N','N','N','N','N','N','A','A','A','A','A','A','A','A','A','A','B','B','B','B','B','B','B','B','B','B','R','R','R','R','R','R','R','R','R','R','V','V','V','V','V','V','V','V','V','V']).
-
-fac1(['_','_','_','_']).
-fac2(['_','_','_','_']).
-fac3(['_','_','_','_']).
-fac4(['_','_','_','_']).
-fac5(['_','_','_','_']).
-fac7(['_','_','_','_']).
-fac8(['_','_','_','_']).
-fac9(['_','_','_','_']).
-
-factories([f1,f2,f3,f4,f5,f6,f7,f8,f9]).
-
-init_player(Name, Points, PlayerOut):- board(Board), PlayOut = [Name, Points, Board].
-
-patterns(Patterns):-patt1(Pat1),patt2(Pat2),patt3(Pat3),patt4(Pat4),patt5(Pat5),Patterns = [Pat1,Pat2,Pat3,Pat4,Pat5].
-patt1(['_']).
-patt2(['_','_']).
-patt3(['_','_','_']).
-patt4(['_','_','_','_']).
-patt5(['_','_','_','_','_']).
-
-the_wall(Wall):-the_wall_lines(Lines),Wall=[Lines].
-
-the_wall_lines([['a','v','r','n','b'],
-                ['b','a','v','r','n'],
-                ['n','b','a','v','r'],
-                ['r','n','b','a','v'],
-                ['v','r','n','b','a']]).
-
-the_floor(['_','_','_','_','_','_','_']).
-
-board(Board):-patterns(Patterns),the_wall(Wall),the_floor(Floor),Board=[Patterns,Wall,Floor].
-
 /* ------------------------------------------- *
  * 				P R O G R A M				   *
  * ------------------------------------------- */
@@ -128,8 +88,29 @@ start_playing(ListPlayers, ListFactories, ListPlayersOut, ListFactoriesOut, Cent
     Factory is nth0(NumFactory, ListFactories, FactoryOut),
     getColorPos(Factory, Color, Result, ListAux, CenterBoard, CenterBoardOut),
     % Ask pattern line where chips will be introduced
-    write('Pattern Line: '), read(PatternLine).
+    write('Pattern Line: '), read(PatternLine)
     % modificar el tablero
+    
+    %llamar a alicatado
+    ((list_to_set(getFactory(1,facAux1), []),
+    list_to_set(getFactory(2,facAux2), []),
+    list_to_set(getFactory(3,facAux3), []),
+    list_to_set(getFactory(4,facAux4), []),
+    list_to_set(getFactory(5,facAux5), []),
+    list_to_set(getFactory(6,facAux6), []),
+    list_to_set(getFactory(7,facAux7), []),
+    list_to_set(getFactory(8,facAux8), []),
+    list_to_set(getFactory(9,facAux9), []),
+    list_to_set(CenterBoard, [])) ->
+        (alicatado())
+    )
+    
+    
+    .
+
+% Rotar la lista de jugadores
+shiftPlayers([Player|OtherPLayers], ShiftedList) :-
+  append(OtherPLayers, [Player], ShiftedList).      
   
 /* Jugador 1 =   ['Laura', '0',
                 [ [['a','v','r','n','b'],['b','a','v','r','n'],['n','b','a','v','r'],['r','n','b','a','v'],['v','r','n','b','a']], 
@@ -177,11 +158,18 @@ getPlayer([ H | _ ]):- getPlayerBoard(H).
 
 %----------------------------- GET PLAYER BOARD
 % Print player's board
-getPlayerBoard([_, _, [Pattern, Wall, Floor]]):- 
+printPlayerBoard([_, _, [Pattern, Wall, Floor]]):- 
     printMatrix(Pattern),
     printMatrix(Wall),
     printMatrix(Floor).
-
+    
+%----------------------------- GET PLAYER BOARD
+getPlayerBoard([_, _, [Pattern, Wall, Floor]], BoardOut):- 
+    append([], [Pattern], BoardAux),
+    append(BoardAux , [Wall], BoardAux2),
+    append(BoardAux2, [Floor], BoardOut).
+    
+%Board = [[[a, v, r, n, b], [b, a, v, r, n], [n, b, a, v, r], [r, n, b, a, v], [v, r, n, b, a]], [['_'], ['_', '_'], ['_', '_', '_'], ['_', '_', '_', '_'], ['_', '_', '_', '_', '_']], ['_', '_', '_', '_', '_', '_', '_']]
 %----------------------------- GET PATTERN
 getPattern([Player | _]):- getPatternPlay(Player).
 
@@ -192,6 +180,9 @@ getPatternPlay([_,_,Board], Result) :-
 getFloorPlay([_,_,Board], Result) :-
     nth0(2,Board,Result). 
 
+%----------------------------- GET Factory
+getFactory(ListFactories, NumFactory, FactoryOut) :-
+    nth0(NumFactory,ListFactories,FactoryOut).
 
 %----------------------------- PRINT BOARD
 printMatrix([]).
@@ -284,7 +275,7 @@ prueba([Color|List], PatternLine,PatterLineOut):-
 % OUTPUTS: Player (his board will be modified during his turn), List Factories and Center Board
 movePlayer(ListFactories, CenterBoard, Player, PlayerOut, ListFactoriesOut, CenterBoardOut):- 
     write('Select a factory: '), read(NumFactory),
-    nth0(NumFactory, ListFactories, FactoryOut),
+    nth1(NumFactory, ListFactories, FactoryOut),
     write('Select a color; '), read(Color),
     write(Color),
     getColorPos(FactoryOut,Color, Result, ListAux, CenterBoard, CenterBoardOut),
@@ -296,8 +287,41 @@ movePlayer(ListFactories, CenterBoard, Player, PlayerOut, ListFactoriesOut, Cent
     nth1(NumPatternLine, ListPattern, PatternLine),
     % Introducing the chips inside the pattern line
     enter(ListAux, PatternLine, FloorLine, PatternLineOut, FloorLineOut),
-    
+    % Update player's board
+    sustitucionPatron(NumPatternLine, PatternLineOut, ListPattern, ListPatternOut),
+    sustitucionElemTablero(getPlayerBoard(Player, Board), ListPatternOut ,2 ,BoardOut),
+    sustitucionTablero(Player, BoardOut, PlayerOut),
+    % Update ListFactories
+    NumAux is NumFactory-1,
+    sustitucionElemTablero(ListFactories, FactoryOut, NumAux, ListFactoriesOut).
 
+  
+%-------------------------TILING
+tiling(4,[],_).
+tiling(NumPatternLine, Player, PlayerOut):-
+    getPlayerBoardL(Player,Board),
+    %tiene que hacerse cosas
+    
+    nth0(1,Board, PatternLinesAux),
+    nth0(NumPatternLine,PatternLinesAux, pat1),
+    ((list_to_set(pat1, [_]),(not(member('_',pat1))))->
+        metodoAux(Player) %hace: modificar la linea de pared para alicar como toque
+    )
+     
+    Num is NumPatternLine + 1,
+    tiling(Num, ListPlayer, PlayerAux)
+    .
+    
+TEST CASE: tiling(0, ['Laura', 0, 
+                [ [['a','v','r','n','b'],['b','a','v','r','n'],['n','b','a','v','r'],['r','n','b','a','v'],['v','r','n','b','a']], 
+                   [['R'], ['A','A'],['V','V','V'],['N','N','N','N'],['B','B','B','B','B']], 
+                   ['_','_','_','_','_','_','_']]] , R).
+ PLAYER = ['Laura', '0',
+                [ [['a','v','r','n','b'],['b','a','v','r','n'],['n','b','a','v','r'],['r','n','b','a','v'],['v','r','n','b','a']], 
+                   [['R'], ['A','A'],['V','V','V'],['N','N','N','N'],['B','B','B','B','B']], 
+                   ['_','_','_','_','_','_','_'] 
+                ]
+             ]
 % PLAYER = [Name, Point, Board]
 % Board = [Wall, Pattern, Floor]
 % Pattern = L1, L2,L3,L4, L5
@@ -322,6 +346,7 @@ changeBoard(ListPattern, NewPatterLine, NumLine, ListPatternsOut) :-
 % PLAYER: ['Laura', '0', [ [['a','v','r','n','b'],['b','a','v','r','n'],['n','b','a','v','r'],['r','n','b','a','v'],['v','r','n','b','a']], [['_'], ['_','_'],['_','_','_'],['_','_','_','_'],['_','_','_','_','_']], ['_','_','_','_','_','_','_'] ],
 
 
+
 % Auxiliar Functiom that will be deleted when move player works properly
 getChips(ListFactories, CenterBoard, Player, PlayerOut, ListFactoriesOut, CenterBoardOut):- 
    write('Select a factory: '), read(NumFactory),
@@ -339,6 +364,29 @@ insertChips(Player, ListAux, FloorLine, PatternLineOut, FloorLineOut):-
     nth1(NumPatternLine, ListPattern, PatternLine),
     % Introducing the chips inside the pattern line
     enter(ListAux, PatternLine, FloorLine, PatternLineOut, FloorLineOut).
+    
+    
+%Sutituye el tablero de un jugador por uno nuevo (normalmente proporconada por sustitucionTablero)
+%sustitucionPatron(Jugador, NuevoTablero, JugadorOut).
+sustitucionTablero(PlayerIn, NewBoard, PlayerOut):-
+    nth0(2, PlayerOut, NewBoard, PlayerIn).
+    
+%Sustituye un elemento del tablero.
+sustitucionElemTablero(BoardIn, Element, Index, BoardOut):-
+    nth0(Index, BoardOut ,Element, BoardIn).
+    
+%Cambia una linea de patron del tablero de patrones
+sustitucionPatron(NumPatron, NewPattern, ListPattern, PatternChanged):-
+    nth0(NumPatron, PatternChanged ,NewPattern, ListPattern).
+
+sustitucionPatron([['_'],
+                    ['_','_'],
+                    ['_','_','_'],
+                    ['_','_','_','_'],
+                    ['_','_','_','_','_']],
+                    ['R', 'R'], 1, Resultado).
+
+%sustitucionPatronB(1, ['R', 'R'], [['_'], ['_','_'],['_','_','_'],['_','_','_','_'],['_','_','_','_','_']], Resultado).
 
 /* insertChips(
  			 ['Laura',
