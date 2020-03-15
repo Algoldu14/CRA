@@ -1,5 +1,39 @@
 % Autor: Álvaro Golbano, Dave y las Lauras <3
 
+bag(['N','N','N','N','N','N','N','N','N','N','A','A','A','A','A','A','A','A','A','A','B','B','B','B','B','B','B','B','B','B','R','R','R','R','R','R','R','R','R','R','V','V','V','V','V','V','V','V','V','V']).
+
+fac1(['_','_','_','_']).
+fac2(['_','_','_','_']).
+fac3(['_','_','_','_']).
+fac4(['_','_','_','_']).
+fac5(['_','_','_','_']).
+fac7(['_','_','_','_']).
+fac8(['_','_','_','_']).
+fac9(['_','_','_','_']).
+
+factories([f1,f2,f3,f4,f5,f6,f7,f8,f9]).
+
+init_player(Name, Points, PlayerOut):- board(Board), PlayOut = [Name, Points, Board].
+
+patterns(Patterns):-patt1(Pat1),patt2(Pat2),patt3(Pat3),patt4(Pat4),patt5(Pat5),Patterns = [Pat1,Pat2,Pat3,Pat4,Pat5].
+patt1(['_']).
+patt2(['_','_']).
+patt3(['_','_','_']).
+patt4(['_','_','_','_']).
+patt5(['_','_','_','_','_']).
+
+the_wall(Wall):-the_wall_lines(Lines),Wall=[Lines].
+
+the_wall_lines([['a','v','r','n','b'],
+                ['b','a','v','r','n'],
+                ['n','b','a','v','r'],
+                ['r','n','b','a','v'],
+                ['v','r','n','b','a']]).
+
+the_floor(['_','_','_','_','_','_','_']).
+
+board(Board):-patterns(Patterns),the_wall(Wall),the_floor(Floor),Board=[Patterns,Wall,Floor].
+
 /* ------------------------------------------- *
  * 				P R O G R A M				   *
  * ------------------------------------------- */
@@ -22,17 +56,22 @@ play:-
 check_start(exit):-!.
 check_start(start):-    write('Number of player: '), nl,
                         read(NPlayer),
-                        %initFactory(NPlayer,_),
-                        %start(),
-  
-    !.
+                        create_players(NPlayer, [], ListPlayers),
+                        NumFact is NPlayer*2 +1,
+                        fill_factories(shuffle(BagS),BagOut,NumFact,[], FactoryOut),
+                        start_playing(ListPlayers, FactoryOut, ListPlayersOut, ListFactoriesOut, []),!.
+
+%--------------------------- SHUFFLE BAG
+%input: BAG
+%output: bag permutated
+shuffle(BagS):- bag(Bag), random_permutation(Bag,BagS).
 
 % --------------------------- CREATE PLAYERS
 % input: number of players that will be created
 % output: a list that contains all the players created
 %create_players(0, PlayersOut, PlayersOut).
 
-create_players(0,_,_):-!.
+create_players(0,_,_).
 create_players(0, PlayersOut, PlayersOut).
 create_players(Nplayer,PlayersAux,PlayersOut):- 
        write('Name of the player: '),nl, read(NamePlayer),
@@ -58,12 +97,12 @@ fill_factory(BagOut,BagOut,FactoryOut,FactoryOut).
 %Condition for stopping the recursivity
 %The first factoriesOut is an empty list where you saved the factories that have been filled
 %The other factoriesOut is where the results will be saved
-fill_factories(BagOut,BagOut,0,FactoriesOut,FactoriesOut).
+fill_factories(BagOut,BagOut,0,FactoriesOut,FactoriesOut):-!.
 
 %Inputs: BagIn, NFact (number of factories that will be filled)
 % Here, factoriesAux is the factory that have been recently filled
 fill_factories(BagIn,BagOut,NFact,FactoriesAux,FactoriesOut):-
-    f1(Fact),fill_factory(BagIn,BagAux,Fact,FactAux),
+    fac1(Fact),fill_factory(BagIn,BagAux,Fact,FactAux),
      % Factories out is the result of appending the previous resut with the new factory filled
     append(FactoriesAux,[FactAux],FactoriesAux2),
     NFactAux is NFact - 1,
@@ -75,7 +114,7 @@ fill_factories(BagIn,BagOut,NFact,FactoriesAux,FactoriesOut):-
 
 %start_playing(ListPlayers, [], ListPlayersOut, [], [], Bag):- %pues ahora a alicatar
 
-start_playing(ListPlayers, ListFactories, ListPlayersOut, ListFactoriesOut, CenterBoard, Bag):-
+start_playing(ListPlayers, ListFactories, ListPlayersOut, ListFactoriesOut, CenterBoard):-
     % Print active board's player
     getPlayer(ListPlayers),
     % Print center board and factories
@@ -89,7 +128,7 @@ start_playing(ListPlayers, ListFactories, ListPlayersOut, ListFactoriesOut, Cent
     getColorPos(Factory, Color, Result, ListAux, CenterBoard, CenterBoardOut),
     % Ask pattern line where chips will be introduced
     write('Pattern Line: '), read(PatternLine)
-    % modificar el tablero
+    % llamada a movePlayer
     
     %llamar a alicatado
     ((list_to_set(getFactory(1,facAux1), []),
@@ -105,12 +144,24 @@ start_playing(ListPlayers, ListFactories, ListPlayersOut, ListFactoriesOut, Cent
         (alicatado())
     )
     
-    
+    start_playing(shiftPlayers(ListPlayers, ListPlayersAux), ListFactoriesAux,  ListPlayersOut, ListPlayersOut, CenterBoardAux)
     .
 
 % Rotar la lista de jugadores
-shiftPlayers([Player|OtherPLayers], ShiftedList) :-
-  append(OtherPLayers, [Player], ShiftedList).      
+shiftPlayers([Player|OtherPlayers], ShiftedList) :-
+  append(OtherPlayers, [Player], ShiftedList).      
+  
+shiftPlayers([ ['Laura', 0,
+                [ [['a','v','r','n','b'],['b','a','v','r','n'],['n','b','a','v','r'],['r','n','b','a','v'],['v','r','n','b','a']], 
+                   [['_'], ['_','_'],['_','_','_'],['_','_','_','_'],['_','_','_','_','_']], 
+                   ['_','_','_','_','_','_','_'] 
+                ]
+             ], ['Alvaro', 0,
+                [ [['a','v','r','n','b'],['b','a','v','r','n'],['n','b','a','v','r'],['r','n','b','a','v'],['v','r','n','b','a']], 
+                   [['_'], ['_','_'],['_','_','_'],['_','_','_','_'],['_','_','_','_','_']], 
+                   ['_','_','_','_','_','_','_'] 
+                ]
+             ]], Resultado).
   
 /* Jugador 1 =   ['Laura', '0',
                 [ [['a','v','r','n','b'],['b','a','v','r','n'],['n','b','a','v','r'],['r','n','b','a','v'],['v','r','n','b','a']], 
