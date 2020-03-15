@@ -72,8 +72,8 @@ check_start(start):-    write('Number of player: '), nl,
 % output: a list that contains all the players created
 %create_players(0, PlayersOut, PlayersOut).
 
-create_players(0,_,_).
-
+create_players(0,_,_):-!.
+create_players(0, PlayersOut, PlayersOut).
 create_players(Nplayer,PlayersAux,PlayersOut):- 
        write('Name of the player: '),nl, read(NamePlayer),
        init_player(NamePlayer,0,JugadorOut),
@@ -182,6 +182,15 @@ getPlayerBoard([_, _, [Pattern, Wall, Floor]]):-
     printMatrix(Wall),
     printMatrix(Floor).
 
+%----------------------------- GET PATTERN
+getPattern([Player | _]):- getPatternPlay(Player).
+
+getPatternPlay([_,_,Board], Result) :-
+    nth0(1,Board,Result). 
+
+%----------------------------- GET FLOOR
+getFloorPlay([_,_,Board], Result) :-
+    nth0(2,Board,Result). 
 
 
 %----------------------------- PRINT BOARD
@@ -234,15 +243,15 @@ enter(_, PatternLineOut, FloorLineOut, PatternLineOut, FloorLineOut).
 enter([],_, _, _,_).
 
 enter([Color|List], PatternLine, FloorLine, PatternLineOut, FloorLineOut):-
-    % Look up if there's enougth space inside the pattern line
-    (member('_',PatternLine) ->
-    	% Replace the free space with the chip
-        select('_', PatternLine, Color, PatternLineAux), enter(List, PatternLineAux, FloorLine, PatternLineOut, FloorLineOut);
-        % If there isn't enougth space inside the patter line, chip must go to the floor line
-        (member('_',FloorLine) ->
-            select('_',FloorLine,Color,FloorLineAux), enter(List, PatternLine, FloorLineAux, PatternLineOut, FloorLineOut);
-        	enter(List, PatternLine,FloorLine,PatternLine,FloorLine) 
-    )).
+   (member('_', PatternLine) , ( (member(Color,PatternLine)) ; list_to_set(PatternLine, [_]) ) -> 
+   		select('_',PatternLine,Color,PatternLineAux), enter(List, PatternLineAux, FloorLine, PatternLineOut, FloorLineOut);
+   		(member('_',FloorLine) ->  
+        		select('_',FloorLine,Color,FloorLineAux), enter(List, PatternLine, FloorLineAux, PatternLineOut, FloorLineOut);
+           		 % Si el suelo está lleno, se vacía la lista de las fichas, y esas fichas se pierden
+            	 enter(List, PatternLine,FloorLine,PatternLine,FloorLine)
+         )
+   ).
+    
 %TEST CASE: 
 % enter(['R', 'R'], ['_','_'], ['_','_','_','_','_','_','_'], Pattern, Floor).
 % enter(['R', 'R'], ['A','_','_'], ['_','_','_','_','_','_','_'], Pattern, Floor).
@@ -267,50 +276,46 @@ prueba([Color|List], PatternLine,PatterLineOut):-
 
 
 
-/*
 
-    sort(list, [_]). -> sabemos si es vacía o no
-                        si está vacia, pasamos a meter las fichas
-                        
-                        si no está vacia, hacemos el member
-    member(R, List) -> si o no
-    El member el problema que tiene es que no diferencia entre '_' '_' '_' '_' y '_' '_' '_' 'R'
-    
-    
-    
-   ( condition -> then_clause ; else_clause )
-   
-   (
-     sort(list, ['_']) -> meterlo;
-    (
-     member(nth0(1,ListIn,Color),PatternLine) -> meterlo ; writeln("No puedes meter las fichas de ese color en este patrón")
-		)
-)
-
- Meterlo -> coger el primer elemento ListIn y sustituir la primera '_' del PatternLine, borras la primera posicion de ListIn y repites hasta recorrer toda la PatterLine
-
-*/
 
 %-----------------------------MOVE PLAYER
 % Funtion that makes all the move that a player must done in his turn
 % INPUTS: List with all the factories, Center Board, Player (all the data related with the player that is playing)
 % OUTPUTS: Player (his board will be modified during his turn), List Factories and Center Board
 movePlayer(ListFactories, CenterBoard, Player, PlayerOut, ListFactoriesOut, CenterBoardOut):- 
-    % Ask factory and color
     write('Select a factory: '), read(NumFactory),
-    write('Select a color; '), read(Color),
-    % Select tha factory from the list of factories
     nth0(NumFactory, ListFactories, FactoryOut),
-    % Getting the chips from the factory and moving the remaining to the center board
-    getColorPos(FactoryOut, Color , Result, ListAux, CenterBoard, CenterBoardOut),
+    write('Select a color; '), read(Color),
+    write(Color),
+    getColorPos(FactoryOut,Color, Result, ListAux, CenterBoard, CenterBoardOut),
     % Ask the patter line where the player wants to introduces the chips
     write('Pattern Line: '), read(NumPatternLine),
     % Get the List with all the player's pattern line
     getPatternPlay(Player,ListPattern),
     % Getting the choosen line from the list of patterns
-    nth0(NumPatternLine, ListPattern, PatternLine),
+    nth1(NumPatternLine, ListPattern, PatternLine),
     % Introducing the chips inside the pattern line
-    enter(ListAux, PatternLine, FloorLine, PatternLineOut, FloorLineOut).
+    enter(ListAux, PatternLine, FloorLine, PatternLineOut, FloorLineOut),
+    
+
+% PLAYER = [Name, Point, Board]
+% Board = [Wall, Pattern, Floor]
+% Pattern = L1, L2,L3,L4, L5
+% Numero L -> NewPatternLine
+ % Posicion == Numero L
+ % concateno todo lo anterior con NewPatternLine y lo siguiente
+ % Posion != Numero L
+ % Lo que tengo en esa posicion en una lista
+    
+    % Numero L =2
+    % LAux = L1
+    % Laux :: NewPatternLine -> LAux
+    % Laux:: L3
+    
+changeBoard(ListPattern, NewPatterLine, NumLine, ListPatternsOut) :-
+    
+
+    
 
 %Test case:
 % Lista de factorias = [['R', 'V', 'N', 'N'], ['R','R', 'N','N'], ['A','V', 'V', 'R']]
@@ -318,12 +323,48 @@ movePlayer(ListFactories, CenterBoard, Player, PlayerOut, ListFactoriesOut, Cent
 
 
 % Auxiliar Functiom that will be deleted when move player works properly
-movePlayerA(ListFactories, CenterBoard, Player, PlayerOut, ListFactoriesOut, CenterBoardOut):- 
+getChips(ListFactories, CenterBoard, Player, PlayerOut, ListFactoriesOut, CenterBoardOut):- 
    write('Select a factory: '), read(NumFactory),
    nth0(NumFactory, ListFactories, FactoryOut),
    write('Select a color; '), read(Color),
    write(Color),
    getColorPos(FactoryOut,Color, Result, ListAux, CenterBoard, CenterBoardOut).
+
+insertChips(Player, ListAux, FloorLine, PatternLineOut, FloorLineOut):-
+ % Ask the patter line where the player wants to introduces the chips
+    write('Pattern Line: '), read(NumPatternLine),
+    % Get the List with all the player's pattern line
+    getPatternPlay(Player,ListPattern),
+    % Getting the choosen line from the list of patterns
+    nth1(NumPatternLine, ListPattern, PatternLine),
+    % Introducing the chips inside the pattern line
+    enter(ListAux, PatternLine, FloorLine, PatternLineOut, FloorLineOut).
+
+/* insertChips(
+ 			 ['Laura',
+             '0', 
+             [
+             	[['a','v','r','n','b'],
+                ['b','a','v','r','n'],
+                ['n','b','a','v','r'],
+                ['r','n','b','a','v'],
+                ['v','r','n','b','a']],
+               [
+               		['_'],
+                    ['_','_'],
+                    ['_','_','_'],
+                    ['_','_','_','_'],
+                    ['_','_','_','_','_']
+                ],
+                ['_','_','_','_','_','_','_']
+                ]
+              ],
+ 			 ['R', 'R'],
+             ['_','_','_','_','_','_','_'],
+             P,
+             F).
+
+*/
 
 % getColorPos( ['A','V', 'V', 'R'], 'V', Result, ListAux, [], CenterBoardOut).
 /*
