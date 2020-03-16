@@ -128,33 +128,26 @@ start_playing(ListPlayers, ListFactories, ListPlayersOut, ListFactoriesOut, Cent
     write('Factorias: '),nl,
     printMatrix(ListFactories),nl,
     % Ask color and factory
-    write('Select a factory: '), read(NumFactory),
-    write('Select a color; '), read(Color),
+    %write('Select a factory: '), read(NumFactory),
+    %write('Select a color; '), read(Color),
     % Remove the color inside the factory 
-    nth0(NumFactory, ListFactories, Factory),
-    getColorPos(Factory, Color, Result, ListAux, CenterBoard, CenterBoardOut),
+    %nth0(NumFactory, ListFactories, Factory),
+    %getColorPos(Factory, Color, Result, ListAux, CenterBoard, CenterBoardOut),
     % Ask pattern line where chips will be introduced
-    write('Pattern Line: '), read(PatternLine),
+   % write('Pattern Line: '), read(PatternLine),
     % llamada a movePlayer
-    
+    movePlayer(ListFactories, CenterBoard, Player, PlayerOut, ListFactoriesOut, CenterBoardOut),
     %llamar a alicatado
-    ((
-    getFactory(ListFactories,1,facAux1), list_to_set(facAux1, []),
-    getFactory(ListFactories,2,facAux2), list_to_set(facAux2, []),
-    getFactory(ListFactories,3,facAux3), list_to_set(facAux3, []),
-    getFactory(ListFactories,4,facAux4), list_to_set(facAux4, []),
-    getFactory(ListFactories,5,facAux5), list_to_set(facAux5, []),
-    getFactory(ListFactories,6,facAux6), list_to_set(facAux6, []),
-    getFactory(ListFactories,7,facAux7), list_to_set(facAux7, []),
-    getFactory(ListFactories,8,facAux8), list_to_set(facAux8, []),
-    getFactory(ListFactories,9,facAux9), list_to_set(facAux9, []),
-    list_to_set(CenterBoard, [])) ->
-    	write('Toca alicatar')
-        %(alicatado())
-    ),
+    checkTiled(ListFactories), writeln('Alicatar'),
+    
+   
     shiftPlayers(ListPlayers, ListPlayersShifted),
     start_playing(ListPlayersShifted,ListFactoriesAux,ListPlayersOut,ListPlayersOut,CenterBoardAux).
 
+checkedTiled(Centro,Factorias):-Centro=[],factorias_vacias(Factorias).
+factorias_vacias([Fact|MasFactorias):- Fact=[],factorias_vacias(MasFactorias).
+factorias_vacias([]).
+                 
 % Rotar la lista de jugadores
 shiftPlayers([Player|OtherPlayers], ShiftedList) :-
   append(OtherPlayers, [Player], ShiftedList).      
@@ -236,12 +229,12 @@ getPatternPlay([_,_,Board], Result) :-
     nth0(1,Board,Result). 
 
 %----------------------------- GET FLOOR
-getFloorPlay([_,_,Board], Result) :-
+getFloorPlay([_,_,Board], Result):-
     nth0(2,Board,Result). 
 
 %----------------------------- GET Factory
-getFactory(ListFactories, NumFactory, FactoryOut) :-
-    nth0(NumFactory,ListFactories,FactoryOut).
+getFactory(ListFactories, NumFactory, FactoryOut):-
+    nth1(NumFactory,ListFactories,FactoryOut).
 
 %----------------------------- PRINT BOARD
 printMatrix([]).
@@ -289,19 +282,15 @@ pickUpColor(Color, [T|Factory], [T|FactoryOut]):-
 
 %----------------------------- ENTER
 % Introduce chips inside of a pattern line or inside the floor line
-enter(_, PatternLineOut, FloorLineOut, PatternLineOut, FloorLineOut). 
-enter([],_, _, _,_).
+enter([Color|List], PatternLine, FloorLine, PatternLineOut, FloorLineOut):-
+    select('_',PatternLine,Color,PatternLineAux),
+    enter(List, PatternLineAux, FloorLine, PatternLineOut, FloorLineOut).
 
 enter([Color|List], PatternLine, FloorLine, PatternLineOut, FloorLineOut):-
-   (member('_', PatternLine) , ( (member(Color,PatternLine)) ; list_to_set(PatternLine, [_]) ) -> 
-   		select('_',PatternLine,Color,PatternLineAux), enter(List, PatternLineAux, FloorLine, PatternLineOut, FloorLineOut);
-   		(member('_',FloorLine) ->  
-        		select('_',FloorLine,Color,FloorLineAux), enter(List, PatternLine, FloorLineAux, PatternLineOut, FloorLineOut);
-           		 % Si el suelo está lleno, se vacía la lista de las fichas, y esas fichas se pierden
-            	 enter(List, PatternLine,FloorLine,PatternLine,FloorLine)
-         )
-   ).
-    
+    select('_',FloorLine,Color,FloorLineAux),
+    enter(List, PatternLine, FloorLineAux, PatternLineOut, FloorLineOut).
+
+enter(_, PatternLineOut, FloorLineOut, PatternLineOut, FloorLineOut). 
 %TEST CASE: 
 % enter(['R', 'R'], ['_','_'], ['_','_','_','_','_','_','_'], Pattern, Floor).
 % enter(['R', 'R'], ['A','_','_'], ['_','_','_','_','_','_','_'], Pattern, Floor).
@@ -336,7 +325,7 @@ movePlayer(ListFactories, CenterBoard, Player, PlayerOut, ListFactoriesOut, Cent
     write('Select a factory: '), read(NumFactory),
     nth1(NumFactory, ListFactories, FactoryOut),
     write('Select a color; '), read(Color),
-    write(Color),
+    %write(Color),
     getColorPos(FactoryOut,Color, Result, ListAux, CenterBoard, CenterBoardOut),
     % Ask the patter line where the player wants to introduces the chips
     write('Pattern Line: '), read(NumPatternLine),
@@ -348,7 +337,8 @@ movePlayer(ListFactories, CenterBoard, Player, PlayerOut, ListFactoriesOut, Cent
     enter(ListAux, PatternLine, FloorLine, PatternLineOut, FloorLineOut),
     % Update player's board
     sustitucionPatron(NumPatternLine, PatternLineOut, ListPattern, ListPatternOut),
-    sustitucionElemTablero(getPlayerBoard(Player, Board), ListPatternOut ,2 ,BoardOut),
+    getPlayerBoard(Player, Board),
+    sustitucionElemTablero(Board, ListPatternOut ,2 ,BoardOut),
     sustitucionTablero(Player, BoardOut, PlayerOut),
     % Update ListFactories
     NumAux is NumFactory-1,
