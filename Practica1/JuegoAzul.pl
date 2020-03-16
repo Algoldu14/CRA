@@ -144,9 +144,9 @@ start_playing(ListPlayers, ListFactories, ListPlayersOut, ListFactoriesOut, Cent
     shiftPlayers(ListPlayers, ListPlayersShifted),
     start_playing(ListPlayersShifted,ListFactoriesAux,ListPlayersOut,ListPlayersOut,CenterBoardAux).
 
-checkedTiled(Centro,Factorias):-Centro=[],factorias_vacias(Factorias).
-factorias_vacias([Fact|MasFactorias):- Fact=[],factorias_vacias(MasFactorias).
-factorias_vacias([]).
+checkedTiled(CenterBoard,Factories):-CenterBoard=[],emptyFactories(Factories).
+emptyFactories([Fact|ListFact):-Fact=[],emptyFactories(ListFact).
+emptyFactories([]).
                  
 % Rotar la lista de jugadores
 shiftPlayers([Player|OtherPlayers], ShiftedList) :-
