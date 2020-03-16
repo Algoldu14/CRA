@@ -140,22 +140,21 @@ start_playing(ListPlayers, ListFactories, ListPlayersOut, ListFactoriesOut, Cent
     % llamada a movePlayer
     
     %llamar a alicatado
-    ((list_to_set(getFactory(1,facAux1), []),
-    list_to_set(getFactory(2,facAux2), []),
-    list_to_set(getFactory(3,facAux3), []),
-    list_to_set(getFactory(4,facAux4), []),
-    list_to_set(getFactory(5,facAux5), []),
-    list_to_set(getFactory(6,facAux6), []),
-    list_to_set(getFactory(7,facAux7), []),
-    list_to_set(getFactory(8,facAux8), []),
-    list_to_set(getFactory(9,facAux9), []),
+    ((getFactory(ListFactories,1,facAux1),list_to_set(facAux1, []),
+    getFactory(ListFactories,(2,facAux2),list_to_set(facAux2, []),
+    getFactory(ListFactories,3,facAux3),list_to_set(facAux3, []),
+    getFactory(ListFactories,4,facAux4),list_to_set(facAux4, []),
+    getFactory(ListFactories,5,facAux5),list_to_set(facAux5, []),
+    getFactory(ListFactories,6,facAux6),list_to_set(facAux6, []),
+    getFactory(ListFactories,7,facAux7),list_to_set(facAux7, []),
+    getFactory(ListFactories,8,facAux8),list_to_set(facAux8, []),
+    getFactory(ListFactories,9,facAux9),list_to_set(facAux9, []),
     list_to_set(CenterBoard, [])) ->
     	write('Toca alicatar')
         %(alicatado())
     ),
     
-    start_playing(shiftPlayers(ListPlayers, ListPlayersAux), ListFactoriesAux,  ListPlayersOut, ListPlayersOut, CenterBoardAux)
-    .
+    start_playing(shiftPlayers(ListPlayers, ListPlayersAux), ListFactoriesAux,  ListPlayersOut, ListPlayersOut, CenterBoardAux).
 
 % Rotar la lista de jugadores
 shiftPlayers([Player|OtherPlayers], ShiftedList) :-
