@@ -7,11 +7,15 @@ fac2(['_','_','_','_']).
 fac3(['_','_','_','_']).
 fac4(['_','_','_','_']).
 fac5(['_','_','_','_']).
+fac6(['_','_','_','_']).
 fac7(['_','_','_','_']).
 fac8(['_','_','_','_']).
 fac9(['_','_','_','_']).
 
-factories([f1,f2,f3,f4,f5,f6,f7,f8,f9]).
+factories(FacOut):- fac1(F1),fac2(F2),fac3(F3),
+                    fac4(F4),fac5(F5),fac6(F6),
+                    fac7(F7),fac8(F8),fac9(F9), 
+                    FacOut= [F1,F2,F3,F4,F5,F6,F7,F8,F9].
 
 init_player(Name, Points, PlayerOut):- board(Board), PlayOut = [Name, Points, Board].
 
@@ -58,7 +62,8 @@ check_start(start):-    write('Number of player: '), nl,
                         read(NPlayer),
                         create_players(NPlayer, [], ListPlayers),
                         NumFact is NPlayer*2 +1,
-                        fill_factories(shuffle(BagS),BagOut,NumFact,[], FactoryOut),
+    					shuffle(BagS),
+                        fill_factories(BagS,BagOut,NumFact,[], FactoryOut),
                         start_playing(ListPlayers, FactoryOut, ListPlayersOut, ListFactoriesOut, []),!.
 
 %--------------------------- SHUFFLE BAG
@@ -70,6 +75,7 @@ shuffle(BagS):- bag(Bag), random_permutation(Bag,BagS).
 % input: number of players that will be created
 % output: a list that contains all the players created
 %create_players(0, PlayersOut, PlayersOut).
+
 
 create_players(0,_,_).
 create_players(0, PlayersOut, PlayersOut).
@@ -98,10 +104,10 @@ fill_factory(BagOut,BagOut,FactoryOut,FactoryOut).
 %The first factoriesOut is an empty list where you saved the factories that have been filled
 %The other factoriesOut is where the results will be saved
 fill_factories(BagOut,BagOut,0,FactoriesOut,FactoriesOut):-!.
-
 %Inputs: BagIn, NFact (number of factories that will be filled)
 % Here, factoriesAux is the factory that have been recently filled
 fill_factories(BagIn,BagOut,NFact,FactoriesAux,FactoriesOut):-
+    %printMatrixRow(BagIn),
     fac1(Fact),fill_factory(BagIn,BagAux,Fact,FactAux),
      % Factories out is the result of appending the previous resut with the new factory filled
     append(FactoriesAux,[FactAux],FactoriesAux2),
@@ -243,7 +249,7 @@ getFactory(ListFactories, NumFactory, FactoryOut) :-
 
 %----------------------------- PRINT BOARD
 printMatrix([]).
-printMatrix([ H | T] ) :- printMatrixRow(H), printMatrix(T).
+printMatrix([ H | T] ) :- printMatrixRow(H),nl, printMatrix(T).
 printMatrix([ H | [] ]) :- printMatrixRow(H).
 
 printMatrixRow([]).
