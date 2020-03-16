@@ -62,12 +62,10 @@ check_start(start):-    write('Number of player: '), nl,
                         read(NPlayer),
                         create_players(NPlayer, [], ListPlayers),
                         NumFact is NPlayer*2 +1,
-    					shuffle(BagS),
-                        fill_factories(BagS,BagOut,NumFact,[], FactoryOut),
+    					shuffle(BagS), fill_factories(BagS,BagOut,NumFact,[], FactoryOut),
                         start_playing(ListPlayers, FactoryOut, ListPlayersOut, ListFactoriesOut, []),!.
 
 %--------------------------- SHUFFLE BAG
-%input: BAG
 %output: bag permutated
 shuffle(BagS):- bag(Bag), random_permutation(Bag,BagS).
 
@@ -118,7 +116,7 @@ fill_factories(BagIn,BagOut,NFact,FactoriesAux,FactoriesOut):-
 % input: list with player and fill all the factories
 % output: modify the board
 
-%start_playing(ListPlayers, [], ListPlayersOut, [], [], Bag):- %pues ahora a alicatar
+%start_playing(ListPlayers, [], ListPlayersOut, [], [], Bag):- %pues ahora a alicatar o no xd
 
 start_playing(ListPlayers, ListFactories, ListPlayersOut, ListFactoriesOut, CenterBoard):-
     % Print active board's player
@@ -140,21 +138,22 @@ start_playing(ListPlayers, ListFactories, ListPlayersOut, ListFactoriesOut, Cent
     % llamada a movePlayer
     
     %llamar a alicatado
-    ((getFactory(ListFactories,1,facAux1),list_to_set(facAux1, []),
-    getFactory(ListFactories,(2,facAux2),list_to_set(facAux2, []),
-    getFactory(ListFactories,3,facAux3),list_to_set(facAux3, []),
-    getFactory(ListFactories,4,facAux4),list_to_set(facAux4, []),
-    getFactory(ListFactories,5,facAux5),list_to_set(facAux5, []),
-    getFactory(ListFactories,6,facAux6),list_to_set(facAux6, []),
-    getFactory(ListFactories,7,facAux7),list_to_set(facAux7, []),
-    getFactory(ListFactories,8,facAux8),list_to_set(facAux8, []),
-    getFactory(ListFactories,9,facAux9),list_to_set(facAux9, []),
+    ((
+    getFactory(ListFactories,1,facAux1), list_to_set(facAux1, []),
+    getFactory(ListFactories,2,facAux2), list_to_set(facAux2, []),
+    getFactory(ListFactories,3,facAux3), list_to_set(facAux3, []),
+    getFactory(ListFactories,4,facAux4), list_to_set(facAux4, []),
+    getFactory(ListFactories,5,facAux5), list_to_set(facAux5, []),
+    getFactory(ListFactories,6,facAux6), list_to_set(facAux6, []),
+    getFactory(ListFactories,7,facAux7), list_to_set(facAux7, []),
+    getFactory(ListFactories,8,facAux8), list_to_set(facAux8, []),
+    getFactory(ListFactories,9,facAux9), list_to_set(facAux9, []),
     list_to_set(CenterBoard, [])) ->
     	write('Toca alicatar')
         %(alicatado())
     ),
-    
-    start_playing(shiftPlayers(ListPlayers, ListPlayersAux), ListFactoriesAux,  ListPlayersOut, ListPlayersOut, CenterBoardAux).
+    shiftPlayers(ListPlayers, ListPlayersShifted),
+    start_playing(ListPlayersShifted,ListFactoriesAux,ListPlayersOut,ListPlayersOut,CenterBoardAux).
 
 % Rotar la lista de jugadores
 shiftPlayers([Player|OtherPlayers], ShiftedList) :-
@@ -196,8 +195,6 @@ ListaJugadores = [ ['Laura', '0',
                 ]
              ]
              ]
-
-
 getPlayer([ ['Laura', '0',
                 [ [['a','v','r','n','b'],['b','a','v','r','n'],['n','b','a','v','r'],['r','n','b','a','v'],['v','r','n','b','a']], 
                    [['_'], ['_','_'],['_','_','_'],['_','_','_','_'],['_','_','_','_','_']], 
@@ -476,13 +473,11 @@ sustitucionPatron([['_'],
              ['_','_','_','_','_','_','_'],
              P,
              F).
-
 */
 
 % getColorPos( ['A','V', 'V', 'R'], 'V', Result, ListAux, [], CenterBoardOut).
 /*
  * 
-
 movePlayerA([['R', 'V', 'N', 'N'], ['R','R', 'N','N'], ['A','V', 'V', 'R']],
              [], 
              ['Laura', '0',
