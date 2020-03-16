@@ -116,18 +116,21 @@ fill_factories(BagIn,BagOut,NFact,FactoriesAux,FactoriesOut):-
 
 start_playing(ListPlayers, ListFactories, ListPlayersOut, ListFactoriesOut, CenterBoard):-
     % Print active board's player
+    %printMatrix(ListFactories),
     getPlayer(ListPlayers),
     % Print center board and factories
-    printMatrix(CenterBoard),
-    printMatrix(ListFactories),
+    write('Centro de la mesa: '),nl,
+    printMatrix(CenterBoard),nl,
+    write('Factorias: '),nl,
+    printMatrix(ListFactories),nl,
     % Ask color and factory
     write('Select a factory: '), read(NumFactory),
     write('Select a color; '), read(Color),
     % Remove the color inside the factory 
-    Factory is nth0(NumFactory, ListFactories, FactoryOut),
+    nth0(NumFactory, ListFactories, Factory),
     getColorPos(Factory, Color, Result, ListAux, CenterBoard, CenterBoardOut),
     % Ask pattern line where chips will be introduced
-    write('Pattern Line: '), read(PatternLine)
+    write('Pattern Line: '), read(PatternLine),
     % llamada a movePlayer
     
     %llamar a alicatado
@@ -141,8 +144,9 @@ start_playing(ListPlayers, ListFactories, ListPlayersOut, ListFactoriesOut, Cent
     list_to_set(getFactory(8,facAux8), []),
     list_to_set(getFactory(9,facAux9), []),
     list_to_set(CenterBoard, [])) ->
-        (alicatado())
-    )
+    	write('Toca alicatar')
+        %(alicatado())
+    ),
     
     start_playing(shiftPlayers(ListPlayers, ListPlayersAux), ListFactoriesAux,  ListPlayersOut, ListPlayersOut, CenterBoardAux)
     .
@@ -205,7 +209,9 @@ getPlayer([ ['Laura', '0',
 %----------------------------- GET PLAYER
 % Input:  List with all the player
 % Output: Information about the first player inside the list
-getPlayer([ H | _ ]):- getPlayerBoard(H).
+getPlayer([H|_]):- 
+    getPlayerBoard(H,P),
+    printPlayerBoard(P).
 
 %----------------------------- GET PLAYER BOARD
 % Print player's board
@@ -357,12 +363,12 @@ tiling(NumPatternLine, Player, PlayerOut):-
     nth0(NumPatternLine,PatternLinesAux, pat1),
     ((list_to_set(pat1, [_]),(not(member('_',pat1))))->
         metodoAux(Player) %hace: modificar la linea de pared para alicar como toque
-    )
-     
+    ),
     Num is NumPatternLine + 1,
     tiling(Num, ListPlayer, PlayerAux)
     .
     
+/*
 TEST CASE: tiling(0, ['Laura', 0, 
                 [ [['a','v','r','n','b'],['b','a','v','r','n'],['n','b','a','v','r'],['r','n','b','a','v'],['v','r','n','b','a']], 
                    [['R'], ['A','A'],['V','V','V'],['N','N','N','N'],['B','B','B','B','B']], 
@@ -372,7 +378,7 @@ TEST CASE: tiling(0, ['Laura', 0,
                    [['R'], ['A','A'],['V','V','V'],['N','N','N','N'],['B','B','B','B','B']], 
                    ['_','_','_','_','_','_','_'] 
                 ]
-             ]
+             ].
 % PLAYER = [Name, Point, Board]
 % Board = [Wall, Pattern, Floor]
 % Pattern = L1, L2,L3,L4, L5
@@ -386,8 +392,11 @@ TEST CASE: tiling(0, ['Laura', 0,
     % LAux = L1
     % Laux :: NewPatternLine -> LAux
     % Laux:: L3
-    
+   
+*/
 changeBoard(ListPattern, NewPatterLine, NumLine, ListPatternsOut) :-
+    write('hola')
+    .
     
 
     

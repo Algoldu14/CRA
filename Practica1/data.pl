@@ -1,4 +1,4 @@
-% Autor: Álvaro Golbano y Laura Ramos
+% Autor: ï¿½lvaro Golbano y Laura Ramos
 % Fecha: 27/02/2020
 
 bag(['N','N','N','N','N','N','N','N','N','N','A','A','A','A','A','A','A','A','A','A','B','B','B','B','B','B','B','B','B','B','R','R','R','R','R','R','R','R','R','R','V','V','V','V','V','V','V','V','V','V']).
@@ -23,7 +23,7 @@ patt3(['_','_','_']).
 patt4(['_','_','_','_']).
 patt5(['_','_','_','_','_']).
 
-the_wall(Wall):- the_wall_lines(Lines),Wall = Lines.
+the_wall(Wall):-the_wall_lines(Lines),Wall = Lines.
 the_wall_lines([['a','v','r','n','b'],['b','a','v','r','n'],['n','b','a','v','r'],['r','n','b','a','v'],['v','r','n','b','a']]).
 the_floor(['_','_','_','_','_','_','_']).
 

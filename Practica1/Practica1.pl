@@ -164,10 +164,10 @@ prueba([Color|List], PatternLine,PatterLineOut):-
 
 movePlayer(ListFactories, CenterBoard, Player, PlayerOut, ListFactoriesOut, CenterBoardOut):- 
     write('Select a factory: '), read(NumFactory),
-   nth0(NumFactory, ListFactories, FactoryOut),
-   % write('Select a color; '), read(Color),
+    nth0(NumFactory, ListFactories, FactoryOut),
+    %write('Select a color; '), read(Color),
     %write(Color),
-   getColorPos(FactoryOut, 'V' , Result, ListAux, CenterBoard, CenterBoardOut),
+    getColorPos(FactoryOut, 'V' , Result, ListAux, CenterBoard, CenterBoardOut),
     write('Pattern Line: '), read(NumPatternLine),
     getPatternPlay(Player,ListPattern),
     nth0(NumPatternLine, ListPattern, PatternLine),
