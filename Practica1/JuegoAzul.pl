@@ -211,13 +211,13 @@ getPlayer([ ['Laura', '0',
 %----------------------------- GET PLAYER
 % Input:  List with all the player
 % Output: Information about the first player inside the list
-getPlayer([H|_]):- 
-    getPlayerBoard(H,P),
-    printPlayerBoard(P).
+getPlayer([Player|_]):- 
+    getPlayerBoard(Player,BoardPlayer),
+    printPlayerBoard(BoardPlayer).
 
 %----------------------------- GET PLAYER BOARD
 % Print player's board
-printPlayerBoard([_, _, [Pattern, Wall, Floor]]):- 
+printPlayerBoard([Pattern, Wall, Floor]):- 
     printMatrix(Pattern),
     printMatrix(Wall),
     printMatrix(Floor).
@@ -230,7 +230,7 @@ getPlayerBoard([_, _, [Pattern, Wall, Floor]], BoardOut):-
     
 %Board = [[[a, v, r, n, b], [b, a, v, r, n], [n, b, a, v, r], [r, n, b, a, v], [v, r, n, b, a]], [['_'], ['_', '_'], ['_', '_', '_'], ['_', '_', '_', '_'], ['_', '_', '_', '_', '_']], ['_', '_', '_', '_', '_', '_', '_']]
 %----------------------------- GET PATTERN
-getPattern([Player | _]):- getPatternPlay(Player).
+getPattern([Player | _ ]):- getPatternPlay(Player).
 
 getPatternPlay([_,_,Board], Result) :-
     nth0(1,Board,Result). 
