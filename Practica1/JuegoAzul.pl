@@ -151,7 +151,7 @@ create_players(0,_,_).
 create_players(0, PlayersOut, PlayersOut).
 create_players(Nplayer,PlayersAux,PlayersOut):- 
        write('Name of the player: '),nl, read(NamePlayer),
-       init_player(NamePlayer,0,JugadorOut),
+       init_player([NamePlayer],[0],JugadorOut),
        append(PlayersAux,[JugadorOut],PlayersAux2),
        NPlayersOut is Nplayer - 1,
        writeln(NPlayersOut),
@@ -248,7 +248,7 @@ fill_factories(BagIn,BagOut,NFact,FactoriesAux,FactoriesOut):-
     append(FactoriesAux,[FactAux],FactoriesAux2),
     NFactAux is NFact - 1,
     fill_factories(BagAux,BagOut,NFactAux,FactoriesAux2,FactoriesOut).
- 
+
 %----------------------------- GET Factory
 getFactory(ListFactories, NumFactory, FactoryOut):-
     nth1(NumFactory,ListFactories,FactoryOut).
@@ -257,8 +257,67 @@ getFactory(ListFactories, NumFactory, FactoryOut):-
 % INPUTS: List, element to find
 % OUTPUT: List with the indexes where the element was found
 indexes(List, E, Is) :- findall(N, nth1(N, List, E), Is).
+
+turnFactories(ListFactories, CenterBoard, Player, PlayerOut, ListFactoriesOut, CenterBoardOut):- 
+    movePlayer(ListFactories, CenterBoard, Player, PlayerOut, ListFactoriesOut, CenterBoardOut),
+    endTurnPlayer(...). 
+
+%endTurnPlayer(_,_,PlayerOut,PlayerOut).
+endTurnPlayer(ListFactories, CenterBoard,Player,PlayerOut):- 
+    checkedTiled(CenterBoard,ListFactories),
+    getPlayerBoard(Player,Board),
+    getPattern(Player, PatternLines),
+    placeToTiled(PatternLines,1,[],[],PatternToTiled,ColorList),
+    getWall(Player,Wall),
+    enterWall(PatternToTiled,Wall,ColorList,WallOut),
+    % PatternToTiled=[1,2]
+    % PatternLines = [['R'], ['V', 'V'], ['_', '_', '_'], ['_', '_', '_', '_'], ['_', '_', '_', '_', '_']]
+    deletePatternLine(PatternLines,PatternToTiled,ColorList, PatternLinesOut),
+    change(PatternLines,PatternLinesOut,Board,BoardAux),
+    change(Wall,WallOut,BoardAux,BoardOut),
+    change(Board, BoardOut, Player, PlayerOut),!.
+
+deletePatternLine(PatternLinesOut, [],[],PatternLinesOut).
+% input: list with all the patternLines, PatternLines tiled, list with color
+% output: result
+deletePatternLine(PatternLines,[Pattern|ListPatternToDelete],[Color|ListColor], PatternLinesOut):-
+    nth1(Pattern,PatternLines,PatternToDelete),
+    length(PatternToDelete,Size),
+    clearLine(Size, Color, PatternToDelete, NewPatternListAux),
+    change(PatternToDelete, NewPatternListAux, PatternLines, PatternLinesAux),
+    deletePatternLine(PatternLinesAux, ListPatternToDelete, ListColor,PatternLinesOut),!.
+
+%deletePatternLine([['R'], ['V','V'],['A','_','_'],['_','_','_','_'],['_','_','_','_','_']],[1,2],['R','V'], Out).
+/*endTurnPlayer([['_','_','_','_']],[],[['Laura'], [0],
+                [ [['a','v','r','n','b'],['b','a','v','r','n'],['n','b','a','v','r'],['r','n','b','a','v'],['v','r','n','b','a']], 
+                   [['R'], ['V','V'],['_','_','_'],['_','_','_','_'],['_','_','_','_','_']], 
+                   ['_','_','_','_','_','_','_'] 
+                ]
+             ], PlayerOut).*/
+%endTurnPlayer(...):-shiftPlayer(...),emptyFactories(ListFactories).
+
+clearLine(0,_, PatterLineOut, PatterLineOut).
+clearLine(Num, Color, PatternLine, PatternLineOut):-
+    select(Color, PatternLine, '_', PatternLineAux),
+    Number is Num - 1,
+    clearLine(Number, Color, PatternLineAux, PatternLineOut),!.
+
+clearLine(1,'R',['R'],Out).
+
+% TO DO: TRANSLATE THIS THING
+%my_remove_element(Color, ListaPatron, Out).
+my_remove_element(_, [], []).
+
+my_remove_element(Y, [Y|Xs], Zs):-
+          my_remove_element(Y, Xs, Zs), !.
+
+my_remove_element(X, [Y|Xs], [Y|Zs]):-
+          my_remove_element(X, Xs, Zs).
     
- 
+
+emptyFactories([Fact|ListFact]):-Fact=['_','_','_','_'],emptyFactories(ListFact).
+emptyFactories([]).
+
 %------------------------------------------------------------------------------------------------------------------------------------------%
 
 /* --------------------------------------------------------------*
@@ -266,7 +325,7 @@ indexes(List, E, Is) :- findall(N, nth1(N, List, E), Is).
  * --------------------------------------------------------------*/
 
 %----------------------------- GET PATTERN
-getPattern([Player | _ ]):- getPatternPlay(Player).
+getPattern(Player,PatternLine):- getPatternPlay(Player,PatternLine).
 
 getPatternPlay([_,_,Board], Result) :-
     nth0(1,Board,Result). 
@@ -282,8 +341,7 @@ getWall([_,_,Board], Wall):-
 
 %----------------------------- CHECKS IF TILING IS AVALIABLE
 checkedTiled(CenterBoard,Factories):-CenterBoard=[],emptyFactories(Factories).
-emptyFactories([Fact|ListFact]):-Fact=['_','_','_','_'],emptyFactories(ListFact).
-emptyFactories([]).
+
                  
 
 %----------------------------- GET COLOR POS
@@ -372,9 +430,10 @@ insertChips(Player, ListAux, FloorLine, PatternLineOut, FloorLineOut):-
 %sustitucionPatron(Jugador, NuevoTablero, JugadorOut).
 checkedTiled(CenterBoard,Factories):-CenterBoard=[],emptyFactories(Factories).
 emptyFactories([Fact|ListFact]):-Fact=['_','_','_','_'],emptyFactories(ListFact).
-emptyFactories([]).(PlayerIn, NewBoard, PlayerOut):-
+emptyFactories([]).
+/*(PlayerIn, NewBoard, PlayerOut):-
     %nth0(2, PlayerOut, NewBoard, PlayerIn).
-    select(2, PlayerIn, NewBoard, PlayerOut).
+    select(2, PlayerIn, NewBoard, PlayerOut).*/
     
 %TEST CASE:
 /* sustitucionTablero(['Laura', 0,
@@ -408,7 +467,6 @@ change(ElemO,ElemChange,[ElemO|L1Tail],[ElemChange|ListOutT]):- change(ElemO,Ele
 change(ElemO,ElemChange,[L1Head|L1Tail],[LHeadOut|ListOutT]):- is_list(L1Head),
                                                                change(ElemO,ElemChange,L1Head,LHeadOut),
                                                                change(ElemO,ElemChange,L1Tail,ListOutT).
-
 /*--------------------------TEST CASE sustitucionPatron
 sustitucionPatron([['_'],
                     ['_','_'],
