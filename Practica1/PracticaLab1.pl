@@ -70,7 +70,7 @@ check_start(start):-    write('Number of player: '), nl,
                         create_players(NPlayer, [], ListPlayers),
                         NumFact is NPlayer*2 +1,
     					shuffle(BagS), fill_factories(BagS,_,NumFact,[], FactoryOut),
-                        start_playing(ListPlayers, FactoryOut, [],ListPlayersOut, ListFactoriesOut, CenterBoardOut),!.
+                        start_playing(ListPlayers, FactoryOut, [],_, _, _),!.
 
 
 
@@ -86,7 +86,7 @@ start_playing(ListPlayers, ListFactories, CenterBoard, ListPlayersOut, ListFacto
     returnPlayer(ListPlayers, Player),
     %writeln("-------------------"),
     % Print center board and factories
-    write('Centro de la mesa: '),nl,
+    % write('Centro de la mesa: '),nl,
     printMatrix(CenterBoard),nl,
     write('Factorias: '),nl,
     printMatrix(ListFactories),nl,
@@ -96,7 +96,7 @@ start_playing(ListPlayers, ListFactories, CenterBoard, ListPlayersOut, ListFacto
     nth1(NumFactory, ListFactories, FactoryAux),
     write('Select a color; '), read(Color),
     %write(Color),
-    getColorPos(FactoryAux,Color, ListAux, CenterBoard, CenterBoardOut,FactoryOut),
+    getColorPos(FactoryAux, Color, ListAux, CenterBoard, CenterBoardOut,FactoryOut),
    % change(CenterBoard, CenterBoardAux, CenterBoard, CenterBoardOut),
     % Ask the patter line where the player wants to introduces the chips
     write('Pattern Line: '), read(NumPatternLine),
@@ -130,14 +130,12 @@ start_playing(ListPlayers, ListFactories, CenterBoard, ListPlayersOut, ListFacto
     %sustitucionElemTablero(ListFactories, FactoryOut, NumAux, ListFactoriesOut).
 	nth1(NumFactory, ListFactories,FactoryOriginal),
 	change(FactoryOriginal, FactoryOut, ListFactories,ListFactoriesOut),
-     
-  /*  %llamar a alicatado WIP
-   (    endTurnPlayer(ListFactoriesOut, CenterBoardOut,PlayerOut,_),   
+    change(Player, PlayerOut,ListPlayers,ListPlayersOut),
+    (    endTurnPlayer(ListFactoriesOut, CenterBoardOut,PlayerOut,_),  
     shiftPlayers(ListPlayers, ListPlayersShifted),
     start_playing(ListPlayersShifted,ListFactoriesOut, CenterBoardOut, ListPlayersOut,ListFactoriesOut,CenterBoardOut),!
-   );*/
-       
-    shiftPlayers(ListPlayers, ListPlayersShifted),
+    );
+    shiftPlayers(ListPlayersOut, ListPlayersShifted),
     start_playing(ListPlayersShifted,ListFactoriesOut, CenterBoardOut, ListPlayersOut,ListFactoriesOut,CenterBoardOut),!.
 
 
@@ -175,7 +173,7 @@ enterWall([Index|Rest],Wall, [Color|Colores], WallOut):-
 
 %----------------------------- PRINTS
 printMatrix([]).
-printMatrix([ H | T] ) :- printMatrixRow(H),nl, printMatrix(T).
+printMatrix([ H | T] ) :- printMatrixRow(H),nl, printMatrix(T),!.
 printMatrix([ H | [] ]) :- printMatrixRow(H).
 
 printMatrixRow([]).
@@ -235,7 +233,7 @@ shiftPlayers([Player|OtherPlayers], ShiftedList) :-
 % Funtion that makes all the move that a player must done in his turn
 % INPUTS: List with all the factories, Center Board, Player (all the data related with the player that is playing)
 % OUTPUTS: Player (his board will be modified during his turn), List Factories and Center Board
-movePlayer(ListFactories, CenterBoard, Player, PlayerOut, ListFactoriesOut, CenterBoardOut):- 
+/*movePlayer(ListFactories, CenterBoard, Player, PlayerOut, ListFactoriesOut, CenterBoardOut):- 
     write('Select a factory: '), read(NumFactory),
     nth1(NumFactory, ListFactories, FactoryAux),
     write('Select a color; '), read(Color),
@@ -262,7 +260,7 @@ movePlayer(ListFactories, CenterBoard, Player, PlayerOut, ListFactoriesOut, Cent
     sustitucionElemTablero(Board, ListPatternOut ,2 ,BoardOut),
     sustitucionTablero(Player, BoardOut, PlayerOut),*/
     %
-    getPatternPlay(Player, ListPatternX),
+    /*getPatternPlay(Player, ListPatternX),
     change(PatternLine, PatternLineOut, ListPatternX, ListPatternY),
     getPlayerBoard(Player, Board),
     change(ListPatternX, ListPatternY, Board, BoardAux),
@@ -273,7 +271,7 @@ movePlayer(ListFactories, CenterBoard, Player, PlayerOut, ListFactoriesOut, Cent
     % Update ListFactories
     %sustitucionElemTablero(ListFactories, FactoryOut, NumAux, ListFactoriesOut).
 	nth1(NumFactory, ListFactories,FactoryOriginal),
-	change(FactoryOriginal, FactoryOut, ListFactories,ListFactoriesOut).
+	change(FactoryOriginal, FactoryOut, ListFactories,ListFactoriesOut).*/
 
 /* ------------------------------------------- *
  * 		E N D  P L A Y E R  R E L A T E D	   *
@@ -323,9 +321,9 @@ getFactory(ListFactories, NumFactory, FactoryOut):-
 % OUTPUT: List with the indexes where the element was found
 indexes(List, E, Is) :- findall(N, nth1(N, List, E), Is).
 
-turnFactories(ListFactories, CenterBoard, Player, PlayerOut, ListFactoriesOut, CenterBoardOut):- 
+/*turnFactories(ListFactories, CenterBoard, Player, PlayerOut, ListFactoriesOut, CenterBoardOut):- 
     movePlayer(ListFactories, CenterBoard, Player, PlayerOut, ListFactoriesOut, CenterBoardOut),
-    endTurnPlayer(...). 
+    endTurnPlayer(...). */
 
 %endTurnPlayer(_,_,PlayerOut,PlayerOut).
 endTurnPlayer(ListFactories, CenterBoard,Player,PlayerOut):- 
@@ -365,19 +363,7 @@ clearLine(0,_, PatterLineOut, PatterLineOut).
 clearLine(Num, Color, PatternLine, PatternLineOut):-
     select(Color, PatternLine, '_', PatternLineAux),
     Number is Num - 1,
-    clearLine(Number, Color, PatternLineAux, PatternLineOut),!.
-
-
-% TO DO: TRANSLATE THIS THING
-%my_remove_element(Color, ListaPatron, Out).
-my_remove_element(_, [], []).
-
-my_remove_element(Y, [Y|Xs], Zs):-
-          my_remove_element(Y, Xs, Zs), !.
-
-my_remove_element(X, [Y|Xs], [Y|Zs]):-
-          my_remove_element(X, Xs, Zs).
-    
+    clearLine(Number, Color, PatternLineAux, PatternLineOut),!.   
 
 emptyFactories([Fact|ListFact]):-Fact=['_','_','_','_'],emptyFactories(ListFact).
 emptyFactories([]).
@@ -466,33 +452,7 @@ enter(_, PatternLineOut, FloorLineOut, PatternLineOut, FloorLineOut).
 %ListIn = ['R','R']
 %PatternList = [['_'],['_','_'],['_','_','_'],['_','_','_','_'],['_','_','_','_','_']]
 %Floor = ['_','_','_','_','_','_','_']
-
-    
-
-% Auxiliar Function that will be deleted when move player works properly
-getChips(ListFactories, CenterBoard, Player, PlayerOut, ListFactoriesOut, CenterBoardOut):- 
-   write('Select a factory: '), read(NumFactory),
-   nth0(NumFactory, ListFactories, FactoryOut),
-   write('Select a color; '), read(Color),
-   write(Color),
-   getColorPos(FactoryOut,Color, Result, ListAux, CenterBoard, CenterBoardOut).
-
-insertChips(Player, ListAux, FloorLine, PatternLineOut, FloorLineOut):-
- % Ask the patter line where the player wants to introduces the chips
-    write('Pattern Line: '), read(NumPatternLine),
-    % Get the List with all the player's pattern line
-    getPatternPlay(Player,ListPattern),
-    % Getting the choosen line from the list of patterns
-    nth1(NumPatternLine, ListPattern, PatternLine),
-    % Introducing the chips inside the pattern line
-    enter(ListAux, PatternLine, FloorLine, PatternLineOut, FloorLineOut).
-    
-    
-
-
-/*(PlayerIn, NewBoard, PlayerOut):-
-    %nth0(2, PlayerOut, NewBoard, PlayerIn).
-    select(2, PlayerIn, NewBoard, PlayerOut).*/
+   
     
 %TEST CASE:
 /* sustitucionTablero(['Laura', 0,
@@ -505,13 +465,6 @@ insertChips(Player, ListAux, FloorLine, PatternLineOut, FloorLineOut):-
                 PlayerOut).
 */
 
-%Cambia una linea de patron del tablero de patrones
-sustitucionPatron(NumPatron, NewPattern, ListPattern, PatternChanged):-
-    nth0(NumPatron, PatternChanged ,NewPattern, ListPattern).
-    
-%Sustituye un elemento del tablero.
-sustitucionElemTablero(BoardIn, Element, Index, BoardOut):-
-    nth0(Index, BoardOut ,Element, BoardIn).
 
 % Cambiar la linea de patron
 %change(['_'],['R'],[['_'], ['_','_'],['_','_','_'],['_','_','_','_'],['_','_','_','_','_']], PatternOut).
