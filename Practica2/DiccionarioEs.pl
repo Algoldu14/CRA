@@ -1,4 +1,4 @@
-%-------------------------------- D I C C I O N A R I O     E S P A Ñ O L 
+﻿%-------------------------------- D I C C I O N A R I O     E S P A Ñ O L 
 
 articulo(m(art),f,sg)   --> [la].
 articulo(m(art),m,sg)   --> [el].
@@ -18,7 +18,7 @@ nombre(n(n_5),f,sg)     --> [manzana].
 nombre(n(n_6),f, pl)    --> [manzanas].
 nombre(n(n_7),m,sg)     --> [gato].
 nombre(n(n_8),m,sg)     --> [raton].
-nombre(n(n_9),m. pl)    --> [ratones].
+nombre(n(n_9),m, pl)    --> [ratones].
 nombre(n(n_10),m,sg)    --> [alumno].
 nombre(n(n_11),f,sg)    --> [universidad].
 nombre(n(n_12),m,sg)    --> [perro].
@@ -91,8 +91,8 @@ verbo(v(v_13),sg)       --> [persiguio].
 verbo(v(v_14),pl)       --> [vimos].              
 verbo(v(v_15),sg)       --> [canta].
 verbo(v(v_16),sg)       --> [toma].
-verbo(v(v_17,sg)        --> [lee].
-verbo(v(v_18,sg)        --> [escribio].
+verbo(v(v_17),sg)        --> [lee].
+verbo(v(v_18),sg)        --> [escribio].
 
 preposicion(p(p1))      --> [a].
 preposicion(p(p2))      --> [ante].

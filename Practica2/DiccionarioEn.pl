@@ -4,36 +4,36 @@ modifier(m(art1))     --> [a].
 modifier(m(art2))     --> [an].
 
 noun(n(n_1),m,sg)     --> [man].
-noun(n(n_2),f,sg)	  --> [woman].
-noun(n(n_3),_,_)	  --> [john].
-noun(n(n_4),_,_)	  --> [mery].
+noun(n(n_2),f,sg)         --> [woman].
+noun(n(n_3),_,_)          --> [john].
+noun(n(n_4),_,_)          --> [mery].
 noun(n(n_5),f,sg)     --> [apple].
-noun(n(n_6),f,pl)	  --> [apples].
+noun(n(n_6),f,pl)         --> [apples].
 noun(n(n_7),m,sg)     --> [cat].
-noun(n(n_8),m,sg)	  --> [mouse].
-noun(n(n_9),m,pl)	  --> [miece].
-noun(n(n_10),m,sg)	  --> [student].
-noun(n(n_11),f,sg)	  --> [university].
+noun(n(n_8),m,sg)         --> [mouse].
+noun(n(n_9),m,pl)         --> [miece].
+noun(n(n_10),m,sg)        --> [student].
+noun(n(n_11),f,sg)        --> [university].
 noun(n(n_12),m,sg)    --> [dog].
 noun(n(n_13),m,sg)    --> [garden].
-noun(n(n_14),m,sg)	  --> [neighbour].
-noun(n(n_15),m,sg)	  --> [canary].
-noun(n(n_16),m,sg)	  --> [coffee].
-noun(n(n_17),m,sg)	  --> [newspaper].
-noun(n(n_18),_,_)	  --> [oscar].
-noun(n(n_19),_,_)	  --> [wilde].
+noun(n(n_14),m,sg)        --> [neighbour].
+noun(n(n_15),m,sg)        --> [canary].
+noun(n(n_16),m,sg)        --> [coffee].
+noun(n(n_17),m,sg)        --> [newspaper].
+noun(n(n_18),_,_)         --> [oscar].
+noun(n(n_19),_,_)         --> [wilde].
 noun(n(n_20),m,sg)    --> [ghost].
-noun(n(n_21),_,_)	  --> [canterville].
+noun(n(n_21),_,_)         --> [canterville].
 
 verb(v(v_1),sg)       --> [cut].
 verb(v(v_2),sg)       --> [wrap].
 verb(v(v_3),sg)       --> [breaks].
-verb(v(v_4),sg)
+%verb(v(v_4),sg)
 
-adjective             --> [red].  %%Falta por completar
-adjective             --> [big].
-adjective             --> [grey].
-adjective             --> [small].
+%adjective             --> [red].  %%Falta por completar
+%adjective             --> [big].
+%adjective             --> [grey].
+%adjective             --> [small].
 
 
 preposition(p(p1))      --> [to].

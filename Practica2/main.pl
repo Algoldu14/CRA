@@ -1,4 +1,4 @@
-
+﻿
 %------------------------------- ANALIZADOR -----------------------------------------------------
 % Autor:
 % Fecha: 14/03/2019
@@ -20,7 +20,7 @@
 
 %------------------- COSA ANTIGUA
 
-oracion(X,[las, tijeras, cortan, el, papel],[]),sentence(X,Ingles,[]).
+%(X,[las, tijeras, cortan, el, papel],[]),sentence(X,Ingles,[]).
 
 
 % Determinantes de la lengua española.

@@ -1,10 +1,10 @@
-%------------------------------- G R A M A T I C A           E S P A Ñ O L
+﻿%------------------------------- G R A M A T I C A           E S P A Ñ O L
 
 % Oraciones
 
 oracion(s(S,V,O)) --> sint_n(S,G,N), sint_v(V,N), sint_n(O,_,_).
 oracion(s(S,V,C)) --> sint_n(S,G,N), sint_v(V,N), sint_c(C,_,_).
-oracion(s()) -->
+%oracion(s()) -->
 %Sintagmas Nominales
 %falta gestión de nombres propios
 sint_n(sn(M,S),G,N) --> articulo(M,G,N), nombre(S,G,N).
