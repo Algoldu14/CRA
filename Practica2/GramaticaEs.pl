@@ -2,8 +2,8 @@
 
 % Oraciones
 
-oracion(s(S,V,O)) --> sint_n(S,G,N), sint_v(V,N), sint_n(O,_,_).
-oracion(s(S,V,C)) --> sint_n(S,G,N), sint_v(V,N), sint_c(C,_,_).
+oracion(s(S,V,O)) --> sint_n(S,G,N), sint_v(V,G,N), sint_n(O,_,_).
+oracion(s(S,V,C)) --> sint_n(S,G,N), sint_v(V,G,N), sint_c(C,_,_).
 %oracion(s()) -->
 %Sintagmas Nominales
 %falta gestión de nombres propios
