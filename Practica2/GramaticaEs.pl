@@ -15,7 +15,7 @@ sint_n(sn(P,S),G,N) --> pronombre(P, G, N), nombre(S,G,N).
 %Sintagmas Verbales
 
 sint_v(sv(V),_,Num) --> verbo(V,Num). %Verbo a secas
-sint_v(sv(V,AD),G,Num) -->verbo(V,Num),adjetivos(AD,G,Num). %verbo con adjetivo ie: "es grande"
+sint_v(sv(V,AD),G,Num) -->verbo(V,Num),adjetivo(AD,G,Num). %verbo con adjetivo ie: "es grande"
 
 %Sintagmas complemento
 sint_c(sc(P,A,S),G,N) --> preposicion(P), articulo(A,G,N), nombre(S,G,N).

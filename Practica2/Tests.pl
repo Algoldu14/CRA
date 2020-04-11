@@ -1,9 +1,9 @@
-%-------------------------------------------------------------------------------
+﻿%-------------------------------------------------------------------------------
 es_test1:-  oracion(X,[el, hombre, come, una, manzana],[]), draw(X).
 es_test2:-  oracion(X,[ellos, comen, manzanas],[]),draw(X).
 es_test3:-  oracion(X,[tu, comes, una, manzana, roja],[]),draw(X).
 es_test4:-  oracion(X,[juan, ama, a, maria],[]),draw(X).
-es_test5:-  oracion(X,[el, gato, grande, come, un, raton, gris]), draw(X).
+es_test5:-  oracion(X,[el, gato, grande, come, un, raton, gris],[]),draw(X).
 es_test6:-  oracion(X,[juan, estudia, en, la, universidad],[]),draw(X).
 es_test7:-  oracion(X,[el, alumno, ama, la, universidad],[]),draw(X).
 es_test8:-  oracion(X,[el, gato, come, ratones],[]),draw(X).
