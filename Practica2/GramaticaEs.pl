@@ -7,7 +7,10 @@ oracion(s(S,V,C)) --> sint_n(S,G,N), sint_v(V,G,N), sint_c(C,_,_).
 oracion(s(S,V,O,C))-->sint_n(S,G,N),sint_v(V,G,N), sint_n(O,_,_),sint_c(C,_,_).
 oracion(s(S,V1,O1,C,V2,O2))--> sint_n(S,G,N), sint_v(V,G,N), sint_n(O,_,_),conjuncion(C),sint_v(V2,G,N), sint_n(O2,_,_).
 oracion(s(S1,V1,O1,C,S2,V2,O2))--> sint_n(S1,G1,N1), sint_v(V1,G1,N1), sint_n(O1,_,_),conjuncion(C),sint_n(S2,G2,N2),sint_v(V2,G2,N2), sint_n(O2,_,_).
-oracion(s(N)) --> sint_n(N,G,N).
+oracion(s(S1,C,V2,S2,V1))-->sint_n(S1,G1,N1), conjuncion(C),sint_v(V2,G2,N2),sint_n(S2,G2,N2),sint_v(V1,G1,N1).
+oracion(s(S1,C,V2,C2,V1,O1))--> sint_n(S1,G1,N1), conjuncion(C),sint_v(V2,G2,N2),sint_c(C2,_,_),sint_v(V1,G1,N1),sint_n(O1,_,_).
+
+
 
 %Sintagmas Nominales
 %falta gestión de nombres propios
