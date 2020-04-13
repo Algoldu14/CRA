@@ -6,12 +6,21 @@ oracion(s(S,V,O)) --> sint_n(S,G,N), sint_v(V,G,N), sint_n(O,_,_).
 oracion(s(S,V,C)) --> sint_n(S,G,N), sint_v(V,G,N), sint_c(C,_,_).
 oracion(s(S,V,O,C))--> sint_n(S,G,N),sint_v(V,G,N), sint_n(O,_,_),sint_c(C,_,_).
 oracion(s(V,O))-->sint_v(V,_,_), sint_n(O,_,_).
+<<<<<<< HEAD
 oracion(s(S,C,Sub,V,O))--> sint_n(S,G,N),conjuncion(C),oracion_sub(Sub),sint_v(V,G,N).
+=======
+oracion(s(S,C,Sub,V,O))--> sint_n(S,G,N),conjuncion(C),oracion(Sub),sint_v(V,G,N).
+oracion(s(S,C,Sub,V,O))--> sint_n(S,G,N),conjuncion(C),oracion_sub(Sub),sint_v(V,G,N),sint_n(O,_,_).
+>>>>>>> 409f920ab52a14ce5d002e811595c7d89f2e1ffb
 oracion(s(O1,C,O2))-->oracion_sub(C1), conjuncion(C),oracion_sub(C2).
 
 
 oracion_sub(sub(V,C))--> sint_v(V,_,_),sint_c(C,_,_).
+<<<<<<< HEAD
 oracion_sub(sub(V,S))--> sint_v(V,G,N),sint_S(S,G,N).
+=======
+oracion_sub(sub(V,S))--> sint_v(V,G,N),sint_n(S,G,N).
+>>>>>>> 409f920ab52a14ce5d002e811595c7d89f2e1ffb
 oracion_sub(sub(S,V,O))-->sint_n(S,G,N),sint_v(V,G,N),sint_n(O,G,N).
 oracion_sub(sub(V,O))-->sint_v(V,_,_),sint_n(O,_,_).
 
@@ -27,12 +36,19 @@ sint_n(sn(S),G,N)-->nombrePropio(S,_,_).
 sint_n(sn(S1,S2),G,N)-->nombrePropio(S1,_,_),nombrePropio(S2,_,_).
 sint_n(sn(D,S,P,C),G,N)-->determinante(D,_,N),nombre(S,G,N),preposicion(P),nombrePropio(O,_,_).
 sint_n(sn(D,S),_,N)-->determinante(D,_,N),nombre(S,_,N).
+<<<<<<< HEAD
 
+=======
+>>>>>>> 409f920ab52a14ce5d002e811595c7d89f2e1ffb
 
 %Sintagmas Verbales
 
 sint_v(sv(V),_,Num) --> verbo(V,Num). %Verbo a secas
 sint_v(sv(V,AD),G,Num) --> verbo(V,Num),adjetivo(AD,G,Num). %verbo con adjetivo ie: "es grande"
+<<<<<<< HEAD
+=======
+sint_v(sv(V,AD),G,N)-->verbo(V,N), adverbio(AD).
+>>>>>>> 409f920ab52a14ce5d002e811595c7d89f2e1ffb
 
 %Sintagmas complemento
 sint_c(sc(P,A,S),G,N) --> preposicion(P), articulo(A,G,N), nombre(S,G,N).
