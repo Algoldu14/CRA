@@ -20,6 +20,9 @@ sint_n(sn(A,AD,S),G,N) --> articulo(A, G, N), nombre(S,G,N),adjetivo(AD,G,N).
 sint_n(sn(P,S),G,N) --> pronombre(P, G, N), nombre(S,G,N).
 sint_n(sn(P),G,N)-->pronombre(P,G,N).
 sint_n(sn(S),G,N)-->nombre(S,G,N).
+sint_n(sn(S),G,N)-->nombrePropio(S,_,_).
+sint_n(sn(S1,S2),G,N)-->nombrePropio(S1,_,_),nombrePropio(S2,_,_).
+
 
 
 %Sintagmas Verbales
@@ -32,3 +35,4 @@ sint_c(sc(P,A,S),G,N) --> preposicion(P), articulo(A,G,N), nombre(S,G,N).
 sint_c(sc(Adv1,Adv2),_,_) -->  adverbio(Adv1),adverbio(Adv2).
 sint_c(sc(Adv),_,_)-->  adverbio(Adv).
 sint_c(sc(P,N),_,_)-->  preposicion(P), nombre(N,_,_).
+sint_c(sc(P,N),_,_)-->  preposicion(P), nombrePropio(N,_,_).

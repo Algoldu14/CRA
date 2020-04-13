@@ -12,8 +12,6 @@ articulo(m(art1),f,pl)  --> [unas].
 %faltan los nombres propios
 nombre(n(n_1),m,sg)     --> [hombre].
 nombre(n(n_2),f,sg)     --> [mujer].
-nombre(n(n_3),_,_)      --> [juan].
-nombre(n(n_4),_,_)      --> [maria].
 nombre(n(n_5),f,sg)     --> [manzana].
 nombre(n(n_6),f, pl)    --> [manzanas].
 nombre(n(n_7),m,sg)     --> [gato].
@@ -27,14 +25,16 @@ nombre(n(n_14),m,sg)    --> [vecino].
 nombre(n(n_15),m,sg)    --> [canario].
 nombre(n(n_16),m,sg)    --> [cafe].
 nombre(n(n_17),m,sg)    --> [periodico].
-nombre(n(n_18),_,_)     --> [oscar].
-nombre(n(n_19),_,_)     --> [wilde].
 nombre(n(n_20),m,sg)    --> [fantasma].
-nombre(n(n_21),_,_)     --> [canterville].
 nombre(n(n_22),f,sg)    --> [piedra].
 nombre(n(n_23),m,sg)    --> [papel].
 nombre(n(n_24),f,pl)    --> [tijeras].
 
+nombrePropio(np(np_1),_,_) --> [juan].
+nombrePropio(np(np_2),_,_) --> [maria].
+nombrePropio(np(np_3),_,_) --> [oscar].
+nombrePropio(np(np_4),_,_) --> [wilde].
+nombrePropio(np(np_5),_,_) --> [canterville].
 
 pronombre(pn(p_1),m,sg) --> [el].
 pronombre(pn(p_2),m,pl) --> [ellos].
