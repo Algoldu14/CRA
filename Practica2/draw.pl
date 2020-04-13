@@ -201,7 +201,7 @@ foreach(Same,Same,_,Max,Max,_) :- !.
 foreach(Begin,End,Struct,Cur,Max,Level) :- Count is Begin + 1,
                                         arg(Count,Struct,Sub),
                                         md(Level,Sub,Cur,Cmax),
-                                       foreach(Count,End,Struct,Cmax,Max,Level).
+                                        foreach(Count,End,Struct,Cmax,Max,Level).
 /*--- max depth end ----------------------------------------------------------*/
 
 /* the 4 in "New is (Cur + Size) + 4" below is the spacing between base nodes
