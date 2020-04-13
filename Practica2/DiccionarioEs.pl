@@ -80,16 +80,17 @@ verbo(v(v_1),pl)        --> [cortan].
 verbo(v(v_2),pl)        --> [envuelven].
 verbo(v(v_3),pl)        --> [rompen].
 verbo(v(v_7),sg)        --> [come].
-verbo(v(v_8),pl)        --> [ama].
-verbo(v(v_9),pl)        --> [estudia].
-verbo(v(v_10),pl)       --> [cazo].
-verbo(v(v_11),pl)       --> [era].
-verbo(v(v_12),pl)       --> [es].
+verbo(v(v_8),sg)        --> [ama].
+verbo(v(v_9),sg)        --> [estudia].
+verbo(v(v_10),sg)       --> [cazo].
+verbo(v(v_11),sg)       --> [era].
+verbo(v(v_12),sg)       --> [es].
 verbo(v(v_7),pl)        --> [comen].
 verbo(v(v_7),sg)        --> [comes].
 verbo(v(v_13),sg)       --> [persiguio].
 verbo(v(v_14),pl)       --> [vimos].              
-verbo(v(v_15),sg)       --> [canta].
+verbo(v(v_15),sg)
+   --> [canta].
 verbo(v(v_16),sg)       --> [toma].
 verbo(v(v_17),sg)        --> [lee].
 verbo(v(v_18),sg)        --> [escribio].

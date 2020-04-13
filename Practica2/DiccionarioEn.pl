@@ -59,7 +59,6 @@ preposition(p(p16))     --> [through].
 preposition(p(p17))     --> [during].
 preposition(p(p18))     --> [at].
 preposition(p(p19))     --> [among].
-preposition(p(p19))     --> [between].
 preposition(p(p20))     --> [to].
 preposition(p(p20))     --> [towards].
 preposition(p(p21))     --> [so].
@@ -69,5 +68,5 @@ preposition(p(p24))     --> [above].
 preposition(p(p25))     --> [in].
 preposition(p(p25))     --> [on].
 preposition(p(p25))     --> [inside].
-preposicion(p(p26))     --> [like].
+preposition(p(p26))     --> [like].
 
