@@ -92,6 +92,7 @@ preposition(p(p25))     --> [inside].
 preposition(p(p26))     --> [like].
 
 conjuction(conj(conj_1))  -->[and].
+conjuction(conj(conj_2)) -->[that].
 
 pronoms(pron(pron_1))  -->[my].
 pronoms(pron(pron_2))  -->[that].
