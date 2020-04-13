@@ -19,7 +19,7 @@ sint_n(sn(A,S,AD),G,N) --> articulo(A, G, N), nombre(S,G,N),adjetivo(AD,G,N).
 sint_n(sn(A,AD,S),G,N) --> articulo(A, G, N), nombre(S,G,N),adjetivo(AD,G,N).
 sint_n(sn(P,S),G,N) --> pronombre(P, G, N), nombre(S,G,N).
 sint_n(sn(P),G,N)-->pronombre(P,G,N).
-sint_n(sn(N),G,N)-->nombre(N,G,N).
+sint_n(sn(S),G,N)-->nombre(S,G,N).
 
 
 %Sintagmas Verbales
