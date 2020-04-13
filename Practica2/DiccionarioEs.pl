@@ -89,8 +89,7 @@ verbo(v(v_7),pl)        --> [comen].
 verbo(v(v_7),sg)        --> [comes].
 verbo(v(v_13),sg)       --> [persiguio].
 verbo(v(v_14),pl)       --> [vimos].              
-verbo(v(v_15),sg)
-   --> [canta].
+verbo(v(v_15),sg)       --> [canta].
 verbo(v(v_16),sg)       --> [toma].
 verbo(v(v_17),sg)        --> [lee].
 verbo(v(v_18),sg)        --> [escribio].
