@@ -22,7 +22,7 @@ en_test1:-  sentence(X,[the, man, eats, an, apple],[]), draw(X).
 en_test2:-  sentence(X,[they, eat, apples],[]),draw(X).
 en_test3:-  sentence(X,[you, eat, a, red, apple],[]),draw(X).
 en_test4:-  sentence(X,[john, loves, mary],[]),draw(X).
-en_test5:-  sentence(X,[the, big, cat, eats, a, grey, mouse]), draw(X).
+en_test5:-  sentence(X,[the, big, cat, eats, a, grey, mouse],[]), draw(X).
 en_test6:-  sentence(X,[john, studies, at, the, university],[]),draw(X).
 en_test7:-  sentence(X,[the, student, loves, the, university],[]),draw(X).
 en_test8:-  sentence(X,[the, cat, eats, mice],[]),draw(X).
