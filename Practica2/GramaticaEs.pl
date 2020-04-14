@@ -7,13 +7,11 @@ oracion(s(S,V,C)) --> sint_n(S,G,N), sint_v(V,G,N), sint_c(C,_,_).
 oracion(s(S,V,O,C))--> sint_n(S,G,N),sint_v(V,G,N), sint_n(O,_,_),sint_c(C,_,_).
 oracion(s(V,O))-->sint_v(V,_,_), sint_n(O,_,_).
 oracion(s(S,C,Sub,V,O))--> sint_n(S,G,N),conjuncion(C),oracion_sub(Sub),sint_v(V,G,N).
-oracion(s(S,C,Sub,V,O))--> sint_n(S,G,N),conjuncion(C),oracion(Sub),sint_v(V,G,N).
 oracion(s(S,C,Sub,V,O))--> sint_n(S,G,N),conjuncion(C),oracion_sub(Sub),sint_v(V,G,N),sint_n(O,_,_).
 oracion(s(O1,C,O2))-->oracion_sub(C1), conjuncion(C),oracion_sub(C2).
 
 
 oracion_sub(sub(V,C))--> sint_v(V,_,_),sint_c(C,_,_).
-oracion_sub(sub(V,S))--> sint_v(V,G,N),sint_S(S,G,N).
 oracion_sub(sub(V,S))--> sint_v(V,G,N),sint_n(S,G,N).
 oracion_sub(sub(S,V,O))-->sint_n(S,G,N),sint_v(V,G,N),sint_n(O,G,N).
 oracion_sub(sub(V,O))-->sint_v(V,_,_),sint_n(O,_,_).

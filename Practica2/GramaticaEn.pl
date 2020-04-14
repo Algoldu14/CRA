@@ -7,9 +7,14 @@
 %sentence(o(GV,GN)) --> g_verb(GV,_,Num),g_noun(GN,_,Num).
 %sentence(o(GN,C,Claus,V))-->g_noun(GN,G,Num),conjuction(C),gramatic_clause(Claus),g_verb(V,G,Num).
 sentence(o(GN,C,Claus,V,O))-->g_noun(GN,G,N), conjuction(C), gramatic_clause(Claus),g_verb(V,G,N),g_noun(O,_,_).
+sentence(s(C1,C,C2))-->gramatic_clause(C1),conjuction(C),gramatic_clause(C2).
 
-gramatic_clause(c(GN,V))-->g_noun(GN,G,N),g_verb(V,G,N).
+
+gramatic_clause(c(GN,V,A))-->g_noun(GN,G,N),g_verb(V,G,N),g_circus(A,_,_).
 gramatic_clause(c(GN,V,O))--> g_noun(GN,G,N),g_verb(V,G,N),g_noun(O,_,_) .
+gramatic_clause(c(V,O))--> g_verb(V,G,N),g_noun(O,_,_).
+gramatic_clause(c(S,V)-->g_noun(S,G,N),g_verb(V,G,N).
+
 
 g_noun(gn(A,N),G,Num) --> article(A,G,Num),noun(N,G,Num).
 g_noun(gn(NP,NP2),_,Num) --> noun(NP,_,Num),noun(NP2,_,Num).
