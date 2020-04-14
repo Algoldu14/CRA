@@ -73,26 +73,19 @@ adjetivo(a(a7),f,sg)    --> [alta].
 adjetivo(a(a7),m,pl)    --> [altos].
 adjetivo(a(a7),f,pl)    --> [altas].
 
-verbo(v(v_1),sg)        --> [cortas].
-verbo(v(v_2),sg)        --> [envuelve].
-verbo(v(v_3),sg)        --> [rompe].
-verbo(v(v_1),pl)        --> [cortan].
-verbo(v(v_2),pl)        --> [envuelven].
-verbo(v(v_3),pl)        --> [rompen].
-verbo(v(v_7),sg)        --> [come].
-verbo(v(v_8),sg)        --> [ama].
-verbo(v(v_9),sg)        --> [estudia].
-verbo(v(v_10),sg)       --> [cazo].
-verbo(v(v_11),sg)       --> [era].
-verbo(v(v_12),sg)       --> [es].
-verbo(v(v_7),pl)        --> [comen].
-verbo(v(v_7),sg)        --> [comes].
-verbo(v(v_13),sg)       --> [persiguio].
-verbo(v(v_14),pl)       --> [vimos].              
-verbo(v(v_15),sg)       --> [canta].
-verbo(v(v_16),sg)       --> [toma].
-verbo(v(v_17),sg)        --> [lee].
-verbo(v(v_18),sg)        --> [escribio].
+verbo(v(v_1),sg)        --> [come].
+verbo(v(v_2),sg)        --> [ama].
+verbo(v(v_3),sg)        --> [estudia].
+verbo(v(v_4),sg)        --> [cazo].
+verbo(v(v_5),sg)        --> [es].
+verbo(v(v_1),pl)        --> [comen].
+verbo(v(v_1),sg)        --> [comes].
+verbo(v(v_6),sg)        --> [persiguio].
+verbo(v(v_7),pl)        --> [vimos].              
+verbo(v(v_8),sg)        --> [canta].
+verbo(v(v_9),sg)        --> [toma].
+verbo(v(v_10),sg)        --> [lee].
+verbo(v(v_11),sg)        --> [escribio].
 
 preposicion(p(p1))      --> [a].
 preposicion(p(p2))      --> [ante].
@@ -130,11 +123,7 @@ conjuncion(c(c5))       --> [pero].
 
 
 determinante(d(d1), 1,sg)  --> [mi].
-determinante(d(d2), 2,sg)  --> [tu].
-determinante(d(d1), 3,sg)  --> [su].
-determinante(d(d1), 1,pl)  --> [mis].
-determinante(d(d1), 2,pl)  --> [tus].
-determinante(d(d1), 3,pl)  --> [sus].
+
 
 
 adverbio(a(a1))     --> [ayer].

@@ -15,7 +15,7 @@ noun(n(n_5),f,sg)         --> [apple].
 noun(n(n_6),f,pl)         --> [apples].
 noun(n(n_7),m,sg)         --> [cat].
 noun(n(n_8),m,sg)         --> [mouse].
-noun(n(n_9),m,pl)         --> [miece].
+noun(n(n_9),m,pl)         --> [mice].
 noun(n(n_10),m,sg)        --> [student].
 noun(n(n_11),f,sg)        --> [university].
 noun(n(n_12),m,sg)        --> [dog].

@@ -19,6 +19,7 @@ g_noun(gn(A,AD,N),G,Num) --> article(A,G,Num),adjective(AD,_),noun(N,G,Num).
 g_noun(gn(PR,N),G,Num) --> pronoms(PR),noun(N,G,Num).
 g_noun(gn(A,NP,P,N),G,Num) --> article(A,G,Num),noun(NP,Num,_), preposition(P,G),noun(N,G,Num).
 g_noun(gn(A,N,P,NP),G,Num) --> article(A,G,Num),noun(NP,Num,_), preposition(P,G),noun(N,G,Num).
+g_noun(gn(P),G,N)-->pronoms(P,G,N).
 
 g_verb(gv(V),_,Num) --> verb(V,Num).
 g_verb(gv(V,AD),G,Num) --> verb(V,Num),adjective(AD,G).
