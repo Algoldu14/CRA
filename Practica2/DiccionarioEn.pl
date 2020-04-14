@@ -1,16 +1,11 @@
 %-------------------------------- D I C C I O N A R I O     E N G L I S H
 
-article(m(art_1),_,_)  --> [the].
-article(m(art_2),_,pl) --> [a].
-article(m(art_2),_,sg) --> [an].
-article(m(art_3),_,_)  -->[some].
-article(m(art_4),_,_)  --> [a].
-
+article(m(art),_,_) --> [the].
+article(m(art1),_,_) --> [a].
+article(m(art1),_,_) --> [an].
 
 noun(n(n_1),m,sg)         --> [man].
 noun(n(n_2),f,sg)         --> [woman].
-noun(n(n_3),_,_)          --> [john].
-noun(n(n_4),_,_)          --> [mery].
 noun(n(n_5),f,sg)         --> [apple].
 noun(n(n_6),f,pl)         --> [apples].
 noun(n(n_7),m,sg)         --> [cat].
@@ -24,37 +19,39 @@ noun(n(n_14),m,sg)        --> [neighbour].
 noun(n(n_15),m,sg)        --> [canary].
 noun(n(n_16),m,sg)        --> [coffee].
 noun(n(n_17),m,sg)        --> [newspaper].
-noun(n(n_18),_,_)         --> [oscar].
-noun(n(n_19),_,_)         --> [wilde].
 noun(n(n_20),m,sg)        --> [ghost].
-noun(n(n_21),_,_)         --> [canterville].
 
 
-verb(v(v_1),sg)   --> [cut].
-verb(v(v_2),sg)   --> [wrap].
-verb(v(v_3),sg)   --> [breaks].
-verb(v(v_4),sg)   --> [eats].
-verb(v(v_2),pl)   -->[eat],!.
-verb(v(v_2),sg)   -->[eat],!.
-verb(v(v_3),sg)   -->[loves].
-verb(v(v_4),sg)   -->[studies].
-verb(v(v_5),sg)   -->[chased].
-verb(v(v_6),sg)   -->[is].
+proper_name(np(np_1),_,_) --> [john].
+proper_name(np(np_2),_,_) --> [mary].
+proper_name(np(np_3),_,_) --> [oscar].
+proper_name(np(np_4),_,_) --> [wilde].
+proper_name(np(np_5),_,_) --> [canterville].
+
+
+verb(v(v_1),sg)   --> [eats].
+verb(v(v_1),pl)   --> [eat],!.
+verb(v(v_1),sg)   --> [eat],!.
+verb(v(v_2),sg)   -->[loves].
+verb(v(v_3),sg)   -->[studies].
+verb(v(v_6),sg)   -->[chased].
+verb(v(v_4),sg)   -->[caught].
+verb(v(v_5),sg)   -->[is].
 verb(v(v_7),pl)   -->[saw].
 verb(v(v_8),sg)   -->[sings].
-verb(v(v_9),sg)   -->[has].
+verb(v(v_9),sg)   -->[drinks].
 verb(v(v_10),sg)  -->[reads].
 verb(v(v_11),sg)  -->[wrote].
 
 
-adjective(adj(adj_1),_)  -->[red].
-adjective(adj(adj_2),m)  -->[big].
-adjective(adj(adj_2),f)  -->[large].
-adjective(adj(adj_3),_)  -->[grey].
-adjective(adj(adj_4),_)  -->[black].
-adjective(adj(adj_5),_)  -->[thin].
-adjective(adj(adj_6),_)  -->[tall].
-adjective(adj(adj_7),_)  -->[yellow].
+
+adjective(a(a2),_)  -->[red].
+adjective(a(a1),_)  -->[big].
+adjective(a(a3),_)  -->[grey].
+adjective(a(a4),_)  -->[black].
+adjective(a(a6),_)  -->[thin].
+adjective(a(a7),_)  -->[tall].
+adjective(a(a5),_)  -->[yellow].
 
 
 preposition(p(p1))      --> [to].
@@ -91,17 +88,17 @@ preposition(p(p25))     --> [on].
 preposition(p(p25))     --> [inside].
 preposition(p(p26))     --> [like].
 
-conjuction(conj(conj_1))  -->[and].
-conjuction(conj(conj_2)) -->[that].
+conjuction(c(c2))  -->[and].
+conjuction(c(c1))  -->[that].
 
-pronoms(pron(pron_1))  -->[my].
-pronoms(pron(pron_2))  -->[that].
+pronoms(pron(p_2))  -->[they].
+pronoms(pron(p_4))  -->[you].
 
-adverb(adv(adv_1))  -->[very].
-adverb(adv(adv_2))  -->[yesterday].
-adverb(adv(adv_3))  -->[well].
+adverb(a(a2))  -->[very].
+adverb(a(a1))  -->[yesterday].
+adverb(a(a3))  -->[well].
 
-
+deter(d(d1),1,sg) -->[my].
 
 
 

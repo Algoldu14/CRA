@@ -28,9 +28,12 @@ sint_n(sn(P),G,N)-->pronombre(P,G,N).
 sint_n(sn(S),G,N)-->nombre(S,G,N).
 sint_n(sn(S),G,N)-->nombrePropio(S,_,_).
 sint_n(sn(S1,S2),G,N)-->nombrePropio(S1,_,_),nombrePropio(S2,_,_).
-sint_n(sn(D,S,P,C),G,N)-->determinante(D,_,N),nombre(S,G,N),preposicion(P),nombrePropio(O,_,_).
+sint_n(sn(D,S,P,C),G,N)-->determinante(D,_,N),nombre(S,G,N),preposicion(P),nombrePropio(C,_,_).
 sint_n(sn(D,S),_,N)-->determinante(D,_,N),nombre(S,_,N).
+<<<<<<< HEAD
 
+=======
+>>>>>>> 346db8611d78bd7a439ebdf5e523c1a2c45496e6
 
 %Sintagmas Verbales
 
