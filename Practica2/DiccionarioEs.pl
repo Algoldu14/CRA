@@ -86,6 +86,7 @@ verbo(v(v_8),sg)        --> [canta].
 verbo(v(v_9),sg)        --> [toma].
 verbo(v(v_10),sg)        --> [lee].
 verbo(v(v_11),sg)        --> [escribio].
+verbo(v(v_12),sg)        --> [era].
 
 preposicion(p(p1))      --> [a].
 preposicion(p(p2))      --> [ante].

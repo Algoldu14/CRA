@@ -19,7 +19,7 @@ noun(n(n_14),m,sg)        --> [neighbour].
 noun(n(n_15),m,sg)        --> [canary].
 noun(n(n_16),m,sg)        --> [coffee].
 noun(n(n_17),m,sg)        --> [newspaper].
-noun(n(n_20),m,sg)        --> [ghost].
+noun(n(n_20),m,sg)        --> [phantom].
 
 
 proper_name(np(np_1),_,_) --> [john].
@@ -42,6 +42,7 @@ verb(v(v_8),sg)   -->[sings].
 verb(v(v_9),sg)   -->[drinks].
 verb(v(v_10),sg)  -->[reads].
 verb(v(v_11),sg)  -->[wrote].
+verb(v(v_12),sg)    -->[was].
 
 
 
@@ -49,7 +50,7 @@ adjective(a(a2),_)  -->[red].
 adjective(a(a1),_)  -->[big].
 adjective(a(a3),_)  -->[grey].
 adjective(a(a4),_)  -->[black].
-adjective(a(a6),_)  -->[thin].
+adjective(a(a6),_)  -->[skinny].
 adjective(a(a7),_)  -->[tall].
 adjective(a(a5),_)  -->[yellow].
 
@@ -91,8 +92,9 @@ preposition(p(p26))     --> [like].
 conjuction(c(c2))  -->[and].
 conjuction(c(c1))  -->[that].
 
-pronoms(pron(p_2))  -->[they].
-pronoms(pron(p_4))  -->[you].
+pronoms(pn(p_2))  -->[they].
+pronoms(pn(p_4))  -->[you].
+pronoms(pn(p_6))  -->[we].
 
 adverb(a(a2))  -->[very].
 adverb(a(a1))  -->[yesterday].
