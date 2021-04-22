@@ -1,0 +1,68 @@
+(test_matriz identidad)
+;(((1 1) (0 1)) ((0 1) (1 1)))
+(test_matriz matriz_prueba1)
+;(((2 4) (4 4)) ((-1 4) (5 4)))
+(test_matriz (reducir_matrices matriz_prueba1))
+;(((1 2) (1 1)) ((-1 4) (5 4)))
+(test_matriz matriz_prueba2)
+;(((1 4) (-4 6)) ((2 8) (-2 3)))
+(test_matriz (reducir_matrices matriz_prueba2))
+;(((1 4) (-2 3)) ((1 4) (-2 3)))
+(test_matriz matriz_prueba3)
+;(((1 2) (-4 2)) ((2 2) (-3 2)))
+(test_matriz (reducir_matrices matriz_prueba3))
+;(((1 2) (-2 1)) ((1 1) (-3 2)))
+
+
+(test_racionales (determinante matriz_prueba1))
+;(7 8)
+(test_racionales (determinante matriz_prueba2))
+;(0 1)
+(test_racionales (determinante matriz_prueba3))
+;(5 4)
+
+
+(inversa? matriz_prueba1)
+;#<procedure:true>
+> (inversa? matriz_prueba2)
+;#<procedure:false>
+> (inversa? matriz_prueba3)
+;#<procedure:true>
+
+
+(test_matriz ((suma_matrices matriz_prueba1) matriz_prueba2))
+;(((3 4) (1 3)) ((0 1) (7 12)))
+(test_matriz ((suma_matrices matriz_prueba1) matriz_prueba3))
+;(((1 1) (-1 1)) ((3 4) (-1 4)))
+(test_matriz ((suma_matrices matriz_prueba2) matriz_prueba3))
+;(((3 4) (-8 3)) ((5 4) (-13 6)))
+
+(test_matriz ((resta_matrices matriz_prueba2) matriz_prueba1))
+;(((-1 4) (-5 3)) ((1 2) (-23 12)))
+(test_matriz ((resta_matrices matriz_prueba1) matriz_prueba2))
+;(((1 4) (5 3)) ((-1 2) (23 12)))
+(test_matriz ((resta_matrices matriz_prueba1) matriz_prueba1))
+;(((0 1) (0 1)) ((0 1) (0 1)))
+
+(test_matriz ((prod_matrices matriz_prueba1) matriz_prueba3))
+;(((3 4) (-2 1)) ((7 8) (-7 8)))
+(test_matriz ((prod_matrices matriz_prueba1) matriz_prueba2))
+;(((7 24) (-7 12)) ((7 24) (-7 12)))
+(test_matriz ((prod_matrices matriz_prueba1) (inversa matriz_prueba1)))
+;(((1 1) (0 1)) ((0 1) (1 1)))
+(test_matriz ((prod_matrices matriz_prueba1) (inversa matriz_prueba1)))
+;(((1 1) (0 1)) ((0 1) (1 1)))
+
+(test_matriz (cuadrado_matrices matriz_prueba1))
+;(((0 1) (7 4)) ((-7 16) (21 16)))
+(test_matriz ((potencia_matrices identidad) cinq))
+;(((1 1) (0 1)) ((0 1) (1 1)))
+(test_matriz ((potencia_matrices matriz_prueba3) trois))
+;(((9 8) (1 2)) ((-1 4) (13 8)))
+
+(test_matriz (inversa matriz_prueba1))
+;(((10 7) (-8 7)) ((2 7) (4 7)))
+(test_matriz (inversa matriz_prueba2))
+;(((0 0) (0 0)) ((0 0) (0 0))) <- matriz definida como matriz de fallo
+(test_matriz (inversa matriz_prueba3))
+(((-6 5) (8 5)) ((-4 5) (2 5)))

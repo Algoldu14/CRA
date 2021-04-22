@@ -1,0 +1,39 @@
+(escero_racional ((par cero) uno))
+;#<procedure:true>
+(escero_racional ((par uno) uno))
+;#<procedure:false>
+((esigual_racional ((par uno) dos)) ((par dos) cuatro))
+;#<procedure:true>
+((esigual_racional ((par uno) dos)) ((par -dos) -cuatro))
+;#<procedure:true>
+((mayor_racional ((par tres) cuatro)) ((par tres) cinco))
+;#<procedure:true>
+
+(test_racionales ((suma_racionales ((par uno) dos)) ((par uno) dos)))
+;(1 1)
+(test_racionales ((suma_racionales ((par tres) cuatro)) ((par cuatro) tres)))
+;(25 12)
+(test_racionales ((suma_racionales ((par cuatro) cuatro)) ((par ocho) tres)))
+;(11 3)
+(test_racionales ((suma_racionales ((par tres) cuatro)) ((par uno) cuatro)))
+;(1 1)
+(test_racionales ((resta_racionales ((par siete) cinco)) ((par cuatro) cinco)))
+;(3 5)
+(test_racionales ((resta_racionales ((par seis) cinco)) ((par uno) cinco)))
+;(1 1)
+(test_racionales ((prod_racionales ((par uno) dos)) ((par cuatro) uno)))
+;(2 1)
+(test_racionales ((prod_racionales ((par uno) cinco)) ((par cuatro) dos)))
+;(2 5)
+(test_racionales ((div_racionales ((par cinco)dos)) ((par dos)cinco)))
+;(25 4)
+(test_racionales ((div_racionales ((par cinco)seis)) ((par dos)cuatro)))
+;(5 3)
+(test_racionales ((div_racionales ((par cinco)cuatro)) ((par dos)seis)))
+;(15 4)
+(test_racionales (inverso_racionales ((par tres) siete)))
+;(7 3
+(test_racionales (inverso_racionales ((par cuatro) doce)))
+;(3 1)
+(test_racionales (opuesto_racionales ((par cuatro) doce)))
+;(-1 3)
